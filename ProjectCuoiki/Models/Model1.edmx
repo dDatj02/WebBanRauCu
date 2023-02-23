@@ -1,0 +1,295 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ProjectCuoiKiModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ProjectCuoiKi.dbo.banner' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="banner">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar(max)" />
+          <Property Name="link" Type="nvarchar(max)" />
+          <Property Name="img" Type="nvarchar(max)" />
+          <Property Name="meta" Type="nvarchar(max)" />
+          <Property Name="hide" Type="bit" />
+          <Property Name="datebegin" Type="smalldatetime" />
+          <Property Name="text" Type="ntext" />
+          <Property Name="order" Type="int" />
+          <Property Name="positionId" Type="int" />
+        </EntityType>
+        <EntityType Name="footer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="email" Type="nvarchar" MaxLength="50" />
+          <Property Name="phone" Type="nchar" MaxLength="20" />
+          <Property Name="address" Type="nvarchar(max)" />
+          <Property Name="hide" Type="bit" />
+          <Property Name="meta" Type="nvarchar(max)" />
+          <Property Name="order" Type="int" />
+          <Property Name="datebegin" Type="smalldatetime" />
+          <Property Name="aboutus" Type="ntext" />
+        </EntityType>
+        <EntityType Name="menu">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="255" />
+          <Property Name="link" Type="varchar(max)" />
+          <Property Name="meta" Type="varchar" MaxLength="50" />
+          <Property Name="hide" Type="bit" />
+          <Property Name="order" Type="int" />
+          <Property Name="datebegin" Type="smalldatetime" />
+        </EntityType>
+        <EntityType Name="positionbanner">
+          <Key>
+            <PropertyRef Name="positionId" />
+          </Key>
+          <Property Name="positionId" Type="int" Nullable="false" />
+          <Property Name="position" Type="nchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="slideshow">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" />
+          <Property Name="img" Type="varchar" MaxLength="50" />
+          <Property Name="link" Type="varchar(max)" />
+          <Property Name="meta" Type="varchar(max)" />
+          <Property Name="order" Type="int" />
+          <Property Name="hide" Type="bit" />
+          <Property Name="datebegin" Type="smalldatetime" />
+          <Property Name="text" Type="ntext" />
+        </EntityType>
+        <Association Name="FK_banner_positionbanner">
+          <End Role="positionbanner" Type="Self.positionbanner" Multiplicity="0..1" />
+          <End Role="banner" Type="Self.banner" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="positionbanner">
+              <PropertyRef Name="positionId" />
+            </Principal>
+            <Dependent Role="banner">
+              <PropertyRef Name="positionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ProjectCuoiKiModelStoreContainer">
+          <EntitySet Name="footer" EntityType="Self.footer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="menu" EntityType="Self.menu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="positionbanner" EntityType="Self.positionbanner" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="slideshow" EntityType="Self.slideshow" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="banner" EntityType="Self.banner" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[banner].[id] AS [id], 
+[banner].[name] AS [name], 
+[banner].[link] AS [link], 
+[banner].[img] AS [img], 
+[banner].[meta] AS [meta], 
+[banner].[hide] AS [hide], 
+[banner].[datebegin] AS [datebegin], 
+[banner].[text] AS [text], 
+[banner].[order] AS [order], 
+[banner].[positionId] AS [positionId]
+FROM [dbo].[banner] AS [banner]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_banner_positionbanner" Association="Self.FK_banner_positionbanner">
+            <End Role="positionbanner" EntitySet="positionbanner" />
+            <End Role="banner" EntitySet="banner" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ProjectCuoiKiModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="menu">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="link" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="meta" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="hide" Type="Boolean" />
+          <Property Name="order" Type="Int32" />
+          <Property Name="datebegin" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityContainer Name="ProjectCuoiKiEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="menus" EntityType="Self.menu" />
+          <EntitySet Name="footers" EntityType="ProjectCuoiKiModel.footer" />
+          <EntitySet Name="banners" EntityType="ProjectCuoiKiModel.banner" />
+          <EntitySet Name="positionbanners" EntityType="ProjectCuoiKiModel.positionbanner" />
+          <AssociationSet Name="FK_banner_positionbanner" Association="ProjectCuoiKiModel.FK_banner_positionbanner">
+            <End Role="positionbanner" EntitySet="positionbanners" />
+            <End Role="banner" EntitySet="banners" />
+          </AssociationSet>
+          <EntitySet Name="slideshows" EntityType="ProjectCuoiKiModel.slideshow" />
+        </EntityContainer>
+        <EntityType Name="footer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="hide" Type="Boolean" />
+          <Property Name="meta" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="order" Type="Int32" />
+          <Property Name="datebegin" Type="DateTime" Precision="0" />
+          <Property Name="aboutus" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="banner">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="link" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="img" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="meta" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="hide" Type="Boolean" />
+          <Property Name="datebegin" Type="DateTime" Precision="0" />
+          <Property Name="text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="order" Type="Int32" />
+          <Property Name="positionId" Type="Int32" />
+          <NavigationProperty Name="positionbanner" Relationship="ProjectCuoiKiModel.FK_banner_positionbanner" FromRole="banner" ToRole="positionbanner" />
+        </EntityType>
+        <EntityType Name="positionbanner">
+          <Key>
+            <PropertyRef Name="positionId" />
+          </Key>
+          <Property Name="positionId" Type="Int32" Nullable="false" />
+          <Property Name="position" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="banners" Relationship="ProjectCuoiKiModel.FK_banner_positionbanner" FromRole="positionbanner" ToRole="banner" />
+        </EntityType>
+        <Association Name="FK_banner_positionbanner">
+          <End Type="ProjectCuoiKiModel.positionbanner" Role="positionbanner" Multiplicity="0..1" />
+          <End Type="ProjectCuoiKiModel.banner" Role="banner" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="positionbanner">
+              <PropertyRef Name="positionId" />
+            </Principal>
+            <Dependent Role="banner">
+              <PropertyRef Name="positionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="slideshow">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="img" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="link" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="meta" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="order" Type="Int32" />
+          <Property Name="hide" Type="Boolean" />
+          <Property Name="datebegin" Type="DateTime" Precision="0" />
+          <Property Name="text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ProjectCuoiKiModelStoreContainer" CdmEntityContainer="ProjectCuoiKiEntities">
+          <EntitySetMapping Name="menus">
+            <EntityTypeMapping TypeName="ProjectCuoiKiModel.menu">
+              <MappingFragment StoreEntitySet="menu">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="link" ColumnName="link" />
+                <ScalarProperty Name="meta" ColumnName="meta" />
+                <ScalarProperty Name="hide" ColumnName="hide" />
+                <ScalarProperty Name="order" ColumnName="order" />
+                <ScalarProperty Name="datebegin" ColumnName="datebegin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="footers">
+            <EntityTypeMapping TypeName="ProjectCuoiKiModel.footer">
+              <MappingFragment StoreEntitySet="footer">
+                <ScalarProperty Name="aboutus" ColumnName="aboutus" />
+                <ScalarProperty Name="datebegin" ColumnName="datebegin" />
+                <ScalarProperty Name="order" ColumnName="order" />
+                <ScalarProperty Name="meta" ColumnName="meta" />
+                <ScalarProperty Name="hide" ColumnName="hide" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="banners">
+            <EntityTypeMapping TypeName="ProjectCuoiKiModel.banner">
+              <MappingFragment StoreEntitySet="banner">
+                <ScalarProperty Name="positionId" ColumnName="positionId" />
+                <ScalarProperty Name="order" ColumnName="order" />
+                <ScalarProperty Name="text" ColumnName="text" />
+                <ScalarProperty Name="datebegin" ColumnName="datebegin" />
+                <ScalarProperty Name="hide" ColumnName="hide" />
+                <ScalarProperty Name="meta" ColumnName="meta" />
+                <ScalarProperty Name="img" ColumnName="img" />
+                <ScalarProperty Name="link" ColumnName="link" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="positionbanners">
+            <EntityTypeMapping TypeName="ProjectCuoiKiModel.positionbanner">
+              <MappingFragment StoreEntitySet="positionbanner">
+                <ScalarProperty Name="position" ColumnName="position" />
+                <ScalarProperty Name="positionId" ColumnName="positionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="slideshows">
+            <EntityTypeMapping TypeName="ProjectCuoiKiModel.slideshow">
+              <MappingFragment StoreEntitySet="slideshow">
+                <ScalarProperty Name="text" ColumnName="text" />
+                <ScalarProperty Name="datebegin" ColumnName="datebegin" />
+                <ScalarProperty Name="hide" ColumnName="hide" />
+                <ScalarProperty Name="order" ColumnName="order" />
+                <ScalarProperty Name="meta" ColumnName="meta" />
+                <ScalarProperty Name="link" ColumnName="link" />
+                <ScalarProperty Name="img" ColumnName="img" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

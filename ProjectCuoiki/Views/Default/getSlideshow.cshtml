@@ -1,0 +1,28 @@
+﻿
+@model IEnumerable<ProjectCuoiki.Models.slideshow>
+
+
+
+@foreach (var item in Model)
+{
+    <div class="single-homepage-slider homepage-bg-2" style="background-image:url(../../Uploads/img/@item.name)">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 offset-lg-1 text-center">
+                    <div class="hero-text">
+                        <div class="hero-text-tablecell">
+                            <p class="subtitle">Fresh Everyday</p>
+                            <h1>100% Organic Collection</h1>
+                            <div class="hero-btns">
+                                <a href="shop.html" class="boxed-btn">Visit Shop</a>
+                                <a href="contact.html" class="bordered-btn">Contact Us</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+<!-- single home slider -->

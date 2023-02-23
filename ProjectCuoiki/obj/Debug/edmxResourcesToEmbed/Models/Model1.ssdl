@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ProjectCuoiKiModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'ProjectCuoiKi.dbo.banner' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="banner">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar(max)" />
+    <Property Name="link" Type="nvarchar(max)" />
+    <Property Name="img" Type="nvarchar(max)" />
+    <Property Name="meta" Type="nvarchar(max)" />
+    <Property Name="hide" Type="bit" />
+    <Property Name="datebegin" Type="smalldatetime" />
+    <Property Name="text" Type="ntext" />
+    <Property Name="order" Type="int" />
+    <Property Name="positionId" Type="int" />
+  </EntityType>
+  <EntityType Name="footer">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="email" Type="nvarchar" MaxLength="50" />
+    <Property Name="phone" Type="nchar" MaxLength="20" />
+    <Property Name="address" Type="nvarchar(max)" />
+    <Property Name="hide" Type="bit" />
+    <Property Name="meta" Type="nvarchar(max)" />
+    <Property Name="order" Type="int" />
+    <Property Name="datebegin" Type="smalldatetime" />
+    <Property Name="aboutus" Type="ntext" />
+  </EntityType>
+  <EntityType Name="menu">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="255" />
+    <Property Name="link" Type="varchar(max)" />
+    <Property Name="meta" Type="varchar" MaxLength="50" />
+    <Property Name="hide" Type="bit" />
+    <Property Name="order" Type="int" />
+    <Property Name="datebegin" Type="smalldatetime" />
+  </EntityType>
+  <EntityType Name="positionbanner">
+    <Key>
+      <PropertyRef Name="positionId" />
+    </Key>
+    <Property Name="positionId" Type="int" Nullable="false" />
+    <Property Name="position" Type="nchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="slideshow">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="50" />
+    <Property Name="img" Type="varchar" MaxLength="50" />
+    <Property Name="link" Type="varchar(max)" />
+    <Property Name="meta" Type="varchar(max)" />
+    <Property Name="order" Type="int" />
+    <Property Name="hide" Type="bit" />
+    <Property Name="datebegin" Type="smalldatetime" />
+    <Property Name="text" Type="ntext" />
+  </EntityType>
+  <Association Name="FK_banner_positionbanner">
+    <End Role="positionbanner" Type="Self.positionbanner" Multiplicity="0..1" />
+    <End Role="banner" Type="Self.banner" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="positionbanner">
+        <PropertyRef Name="positionId" />
+      </Principal>
+      <Dependent Role="banner">
+        <PropertyRef Name="positionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ProjectCuoiKiModelStoreContainer">
+    <EntitySet Name="footer" EntityType="Self.footer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="menu" EntityType="Self.menu" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="positionbanner" EntityType="Self.positionbanner" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="slideshow" EntityType="Self.slideshow" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="banner" EntityType="Self.banner" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+[banner].[id] AS [id], 
+[banner].[name] AS [name], 
+[banner].[link] AS [link], 
+[banner].[img] AS [img], 
+[banner].[meta] AS [meta], 
+[banner].[hide] AS [hide], 
+[banner].[datebegin] AS [datebegin], 
+[banner].[text] AS [text], 
+[banner].[order] AS [order], 
+[banner].[positionId] AS [positionId]
+FROM [dbo].[banner] AS [banner]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_banner_positionbanner" Association="Self.FK_banner_positionbanner">
+      <End Role="positionbanner" EntitySet="positionbanner" />
+      <End Role="banner" EntitySet="banner" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

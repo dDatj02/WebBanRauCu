@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ProjectCuoiKiModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="menu">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="link" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="meta" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="hide" Type="Boolean" />
+    <Property Name="order" Type="Int32" />
+    <Property Name="datebegin" Type="DateTime" Precision="0" />
+  </EntityType>
+  <EntityContainer Name="ProjectCuoiKiEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="menus" EntityType="Self.menu" />
+    <EntitySet Name="footers" EntityType="ProjectCuoiKiModel.footer" />
+    <EntitySet Name="banners" EntityType="ProjectCuoiKiModel.banner" />
+    <EntitySet Name="positionbanners" EntityType="ProjectCuoiKiModel.positionbanner" />
+    <AssociationSet Name="FK_banner_positionbanner" Association="ProjectCuoiKiModel.FK_banner_positionbanner">
+      <End Role="positionbanner" EntitySet="positionbanners" />
+      <End Role="banner" EntitySet="banners" />
+    </AssociationSet>
+    <EntitySet Name="slideshows" EntityType="ProjectCuoiKiModel.slideshow" />
+  </EntityContainer>
+  <EntityType Name="footer">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" />
+    <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="phone" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+    <Property Name="address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="hide" Type="Boolean" />
+    <Property Name="meta" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="order" Type="Int32" />
+    <Property Name="datebegin" Type="DateTime" Precision="0" />
+    <Property Name="aboutus" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="banner">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="link" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="img" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="meta" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="hide" Type="Boolean" />
+    <Property Name="datebegin" Type="DateTime" Precision="0" />
+    <Property Name="text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="order" Type="Int32" />
+    <Property Name="positionId" Type="Int32" />
+    <NavigationProperty Name="positionbanner" Relationship="ProjectCuoiKiModel.FK_banner_positionbanner" FromRole="banner" ToRole="positionbanner" />
+  </EntityType>
+  <EntityType Name="positionbanner">
+    <Key>
+      <PropertyRef Name="positionId" />
+    </Key>
+    <Property Name="positionId" Type="Int32" Nullable="false" />
+    <Property Name="position" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="banners" Relationship="ProjectCuoiKiModel.FK_banner_positionbanner" FromRole="positionbanner" ToRole="banner" />
+  </EntityType>
+  <Association Name="FK_banner_positionbanner">
+    <End Type="ProjectCuoiKiModel.positionbanner" Role="positionbanner" Multiplicity="0..1" />
+    <End Type="ProjectCuoiKiModel.banner" Role="banner" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="positionbanner">
+        <PropertyRef Name="positionId" />
+      </Principal>
+      <Dependent Role="banner">
+        <PropertyRef Name="positionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="slideshow">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="img" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="link" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="meta" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="order" Type="Int32" />
+    <Property Name="hide" Type="Boolean" />
+    <Property Name="datebegin" Type="DateTime" Precision="0" />
+    <Property Name="text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+</Schema>
