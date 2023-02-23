@@ -1,0 +1,26 @@
+﻿
+
+
+
+@model IEnumerable<ProjectCuoiki.Models.news>
+
+@foreach (var item in Model)
+{
+    <div class="col-lg-4 col-md-6">
+        <div class="single-latest-news">
+            <a href="single-news.html"><div class="latest-news-bg news-bg-1" style="background-image:url(../../Uploads/img/latest-news/@item.img)"></div></a>
+            <div class="news-text-box">
+                <h3><a href="single-news.html">@item.title</a></h3>
+                <p class="blog-meta">
+                    <span class="author"><i class="fas fa-user"></i> @item.author</span>
+                    <span class="date"><i class="fas fa-calendar"></i>@item.datebegin</span>
+                </p>
+                <p class="excerpt">@item.description</p>
+                <a href="single-news.html" class="read-more-btn">read more <i class="fas fa-angle-right"></i></a>
+            </div>
+        </div>
+    </div>
+}
+
+
+

@@ -11,6 +11,12 @@
         <EntityTypeShape EntityType="ProjectCuoiKiModel.positionbanner" Width="1.5" PointX="6.125" PointY="4" />
         <AssociationConnector Association="ProjectCuoiKiModel.FK_banner_positionbanner" />
         <EntityTypeShape EntityType="ProjectCuoiKiModel.slideshow" Width="1.5" PointX="6.375" PointY="0.875" />
+        <EntityTypeShape EntityType="ProjectCuoiKiModel.typeproduct" Width="1.5" PointX="0.75" PointY="5.375" />
+        <EntityTypeShape EntityType="ProjectCuoiKiModel.product" Width="1.5" PointX="3" PointY="5" />
+        <AssociationConnector Association="ProjectCuoiKiModel.FK_product_typeproduct" />
+        <EntityTypeShape EntityType="ProjectCuoiKiModel.imageProduct" Width="1.5" PointX="5.375" PointY="7" />
+        <AssociationConnector Association="ProjectCuoiKiModel.FK_product_imageProduct" />
+        <EntityTypeShape EntityType="ProjectCuoiKiModel.news" Width="1.5" PointX="7.375" PointY="6.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

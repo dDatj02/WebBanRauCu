@@ -30,5 +30,9 @@ namespace ProjectCuoiki.Models
         public DbSet<banner> banners { get; set; }
         public DbSet<positionbanner> positionbanners { get; set; }
         public DbSet<slideshow> slideshows { get; set; }
+        public DbSet<typeproduct> typeproducts { get; set; }
+        public DbSet<product> products { get; set; }
+        public DbSet<imageProduct> imageProducts { get; set; }
+        public DbSet<news> news { get; set; }
     }
 }

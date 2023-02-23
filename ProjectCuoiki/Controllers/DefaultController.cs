@@ -46,5 +46,15 @@ namespace ProjectCuoiki.Controllers
             var banneritem = db.banners.FirstOrDefault(i => i.hide == true & i.positionId == 3);
             return PartialView(banneritem);
         }
+        public ActionResult getListNewProductByDate() { 
+
+            var listitem=(from item in db.products where item.hide== true orderby item.datebegin ascending select item).Take(4);
+            return PartialView(listitem.ToList());
+        }
+        public ActionResult getNews()
+        {
+            var listitem = (from item in db.news where item.hide == true orderby item.datebegin ascending select item).Take(3);
+            return PartialView(listitem.ToList());
+        }
     }
 }

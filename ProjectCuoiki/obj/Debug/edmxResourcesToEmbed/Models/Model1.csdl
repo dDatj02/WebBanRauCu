@@ -22,6 +22,18 @@
       <End Role="banner" EntitySet="banners" />
     </AssociationSet>
     <EntitySet Name="slideshows" EntityType="ProjectCuoiKiModel.slideshow" />
+    <EntitySet Name="typeproducts" EntityType="ProjectCuoiKiModel.typeproduct" />
+    <EntitySet Name="products" EntityType="ProjectCuoiKiModel.product" />
+    <AssociationSet Name="FK_product_typeproduct" Association="ProjectCuoiKiModel.FK_product_typeproduct">
+      <End Role="typeproduct" EntitySet="typeproducts" />
+      <End Role="product" EntitySet="products" />
+    </AssociationSet>
+    <EntitySet Name="imageProducts" EntityType="ProjectCuoiKiModel.imageProduct" />
+    <AssociationSet Name="FK_product_imageProduct" Association="ProjectCuoiKiModel.FK_product_imageProduct">
+      <End Role="imageProduct" EntitySet="imageProducts" />
+      <End Role="product" EntitySet="products" />
+    </AssociationSet>
+    <EntitySet Name="news" EntityType="ProjectCuoiKiModel.news" />
   </EntityContainer>
   <EntityType Name="footer">
     <Key>
@@ -86,5 +98,91 @@
     <Property Name="hide" Type="Boolean" />
     <Property Name="datebegin" Type="DateTime" Precision="0" />
     <Property Name="text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="typeproduct">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="link" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="meta" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="datebegin" Type="DateTime" Precision="0" />
+    <Property Name="order" Type="Int32" />
+    <Property Name="hide" Type="Boolean" />
+    <NavigationProperty Name="products" Relationship="ProjectCuoiKiModel.FK_product_typeproduct" FromRole="typeproduct" ToRole="product" />
+  </EntityType>
+  <EntityType Name="product">
+    <Key>
+      <PropertyRef Name="id" />
+      <PropertyRef Name="price" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="link" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="meta" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="hide" Type="Boolean" />
+    <Property Name="datebegin" Type="DateTime" Precision="0" />
+    <Property Name="order" Type="Int32" />
+    <Property Name="price" Type="Int32" Nullable="false" />
+    <Property Name="idType" Type="Int32" />
+    <Property Name="quantity" Type="Int32" />
+    <NavigationProperty Name="typeproduct" Relationship="ProjectCuoiKiModel.FK_product_typeproduct" FromRole="product" ToRole="typeproduct" />
+    <Property Name="idImage" Type="Int32" />
+    <NavigationProperty Name="imageProduct" Relationship="ProjectCuoiKiModel.FK_product_imageProduct" FromRole="product" ToRole="imageProduct" />
+  </EntityType>
+  <Association Name="FK_product_typeproduct">
+    <End Type="ProjectCuoiKiModel.typeproduct" Role="typeproduct" Multiplicity="0..1" />
+    <End Type="ProjectCuoiKiModel.product" Role="product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="typeproduct">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="product">
+        <PropertyRef Name="idType" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="imageProduct">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="link" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="meta" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="hide" Type="Boolean" />
+    <Property Name="datebegin" Type="DateTime" Precision="0" />
+    <Property Name="order" Type="Int32" />
+    <NavigationProperty Name="products" Relationship="ProjectCuoiKiModel.FK_product_imageProduct" FromRole="imageProduct" ToRole="product" />
+  </EntityType>
+  <Association Name="FK_product_imageProduct">
+    <End Type="ProjectCuoiKiModel.imageProduct" Role="imageProduct" Multiplicity="0..1" />
+    <End Type="ProjectCuoiKiModel.product" Role="product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="imageProduct">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="product">
+        <PropertyRef Name="idImage" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="news">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="datebegin" Type="DateTime" Precision="0" />
+    <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="link" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="meta" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="hide" Type="Boolean" />
+    <Property Name="dateUpdate" Type="DateTime" Precision="0" />
+    <Property Name="img" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="author" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
   </EntityType>
 </Schema>
