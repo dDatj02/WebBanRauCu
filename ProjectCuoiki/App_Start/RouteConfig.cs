@@ -18,6 +18,14 @@ namespace ProjectCuoiki
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Default", action = "Index", id = UrlParameter.Optional }
             );
+            //routes.MapRoute("News", "{type}/{meta}",
+            //    new { Controller = "News", Action = "Index", meta = UrlParameter.Optional },
+            //    new RouteValueDictionary
+            //    {
+            //        {"type","tin-tuc" }
+            //    }
+
+            //    );
         }
     }
 }
