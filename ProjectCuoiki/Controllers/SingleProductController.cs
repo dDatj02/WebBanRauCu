@@ -1,19 +1,20 @@
-﻿using System;
+﻿using ProjectCuoiki.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using ProjectCuoiki.Models;
 
 namespace ProjectCuoiki.Controllers
 {
-    public class NewsController : Controller
+    public class SingleProductController : Controller
     {
+        // GET: SingleProduct4
         ProjectCuoiKiEntities db = new ProjectCuoiKiEntities();
-        // GET: News
-        public ActionResult Index(int? id,string meta)
+
+        public ActionResult Index(string meta)
         {
-            var item= db.news.FirstOrDefault(n=>n.meta==meta&&n.hide==true);
+            var item= db.products.FirstOrDefault(i=>i.meta==meta);
             return View(item);
         }
     }

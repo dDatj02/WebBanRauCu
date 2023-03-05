@@ -32,7 +32,13 @@
     <link rel="stylesheet" href="~/Content/css/responsive.css">
 </head>
 <body>
-
+    <!--PreLoader-->
+    <div class="loader">
+        <div class="loader-inner">
+            <div class="circle"></div>
+        </div>
+    </div>
+    <!--PreLoader Ends-->
     <!-- header -->
     <div class="top-header-area mb-5" id="sticker">
         <div class="container">
@@ -41,7 +47,7 @@
                     <div class="main-menu-wrap">
                         <!-- logo -->
                         <div class="site-logo">
-                            <a href="index.html">
+                            <a href="@Url.Action("Index","Default")">
                                 <img src="~/Uploads/img/logo.png" alt="">
                             </a>
                         </div>
@@ -49,13 +55,14 @@
                         <!-- menu start -->
                         <nav class="main-menu">
                             <ul>
-                            @{Html.RenderAction("getMenu", "Default");}
-                            <li>
-                                <div class="header-icons">
-                                    <a class="shopping-cart" href="cart.html"><i class="fas fa-shopping-cart"></i></a>
-                                    <a class="mobile-hide search-bar-icon" href="#"><i class="fas fa-search"></i></a>
-                                </div>
-                            </li>
+                                <li><a href="@Url.Action("Index","Default")">Trang chủ</a></li>
+                                @{Html.RenderAction("getMenu", "Default");}
+                                <li>
+                                    <div class="header-icons">
+                                        <a class="shopping-cart" href="cart.html"><i class="fas fa-shopping-cart"></i></a>
+                                        <a class="mobile-hide search-bar-icon" href="#"><i class="fas fa-search"></i></a>
+                                    </div>
+                                </li>
                             </ul>
                         </nav>
                         <a class="mobile-show search-bar-icon" href="#"><i class="fas fa-search"></i></a>
@@ -67,10 +74,10 @@
         </div>
     </div>
     <!-- end header -->
-    
 
-        @RenderBody()
-    
+
+    @RenderBody()
+
     <!-- footer -->
     @{ Html.RenderAction("getFooter", "Default");}
     <!-- end footer -->

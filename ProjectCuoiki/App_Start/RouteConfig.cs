@@ -19,12 +19,12 @@ namespace ProjectCuoiki
                 defaults: new { controller = "Default", action = "Index", id = UrlParameter.Optional }
             );
             //routes.MapRoute("News", "{type}/{meta}",
-            //    new { Controller = "News", Action = "Index", meta = UrlParameter.Optional },
+            //    new { Controller = "News", action = "Index", meta = UrlParameter.Optional },
             //    new RouteValueDictionary
             //    {
             //        {"type","tin-tuc" }
-            //    }
-
+            //    },
+            //    new[] {"ProjectCuoiKi.Controllers"}
             //    );
         }
     }

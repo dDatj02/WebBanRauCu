@@ -3,5 +3,5 @@
 
     @foreach(var item in Model)
     {
-        <li><a href="#">@item.name</a></li>
+        <li><a href="@Url.Action("Index", "Product", new {meta=item.meta},null)">@item.name</a></li>
     }

@@ -7,14 +7,13 @@
 <!-- home page slider -->
 <div class="homepage-slider">
     <!-- single home slider -->
-    
+
     @{ Html.RenderAction("getSlideshow", "Default");}
     <!-- single home slider -->
-    
+
 
 </div>
 <!-- end home page slider -->
-
 <!-- features list section -->
 <div class="list-section pt-80 pb-80">
     <div class="container">
@@ -81,8 +80,8 @@
     <div class="container">
         <div class="row clearfix">
             @{ Html.RenderAction("getbannerMiddle", "Default");}
-            </div>
         </div>
+    </div>
 </section>
 <!-- end cart banner section -->
 <!-- testimonail-section -->
@@ -162,7 +161,7 @@
 </div>
 <!-- end advertisement section -->
 <!-- shop banner -->
-    @{ Html.RenderAction("getbannerBottom", "Default");}
+@{ Html.RenderAction("getbannerBottom", "Default");}
 <!-- end shop banner -->
 <!-- latest news -->
 <div class="latest-news pt-150 pb-150">
@@ -178,7 +177,7 @@
         </div>
 
         <div class="row">
-          @{ Html.RenderAction("getNews", "Default");}
+            @{ Html.RenderAction("getNews", "Default");}
         </div>
         <div class="row">
             <div class="col-lg-12 text-center">
