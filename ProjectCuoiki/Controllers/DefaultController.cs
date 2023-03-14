@@ -48,7 +48,7 @@ namespace ProjectCuoiki.Controllers
         }
         public ActionResult getListNewProductByDate() { 
 
-            var listitem=(from item in db.products where item.hide== true orderby item.datebegin ascending select item).Take(4);
+            var listitem=(from item in db.products where item.hide== true orderby item.datebegin ascending select item).Take(6);
             return PartialView(listitem.ToList());
         }
         public ActionResult getNews()

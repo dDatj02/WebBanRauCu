@@ -1,0 +1,22 @@
+﻿
+@model IEnumerable<ProjectCuoiki.Models.product>
+
+
+@foreach (var item in Model)
+{
+
+    <div class="col-lg-4 col-md-6 text-center">
+        <div class="single-product-item">
+            <div class="product-image">
+                <a href="@Url.Action("Index", "SingleProduct", new {meta=item.meta},null)"><img src="~/Uploads/img/products/@item.imageProduct.name" alt=""></a>
+            </div>
+            <h3>@item.name</h3>
+            <p class="product-price"><span>Per Kg</span> @item.price </p>
+            <a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+        </div>
+    </div>
+
+}
+
+
+

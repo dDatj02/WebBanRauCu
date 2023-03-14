@@ -17,5 +17,6 @@ namespace ProjectCuoiki.Controllers
             var listitem = from i in db.products where i.typeproduct.meta == meta && i.hide==true orderby i.datebegin ascending select i;
             return View(listitem.ToList().Take(9));
         }
+
     }
 }
