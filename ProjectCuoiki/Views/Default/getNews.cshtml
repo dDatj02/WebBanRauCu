@@ -8,9 +8,9 @@
 {
     <div class="col-lg-4 col-md-6">
         <div class="single-latest-news">
-            <a href="@Url.Action("Index", "News", new { meta = item.meta })"><div class="latest-news-bg news-bg-1" style="background-image:url(../../Uploads/img/latest-news/@item.img)"></div></a>
+            <a href="~/@ViewBag.tintuc/@item.meta"><div class="latest-news-bg news-bg-1" style="background-image:url(../../Uploads/img/latest-news/@item.img)"></div></a>
             <div class="news-text-box">
-                <h3><a href="single-news.html">@item.title</a></h3>
+                <h3><a href="~/@ViewBag.tintuc/@item.meta">@item.title</a></h3>
                 <p class="blog-meta">
                     <span class="author"><i class="fas fa-user"></i> @item.author</span>
                     <span class="date"><i class="fas fa-calendar"></i>@item.datebegin</span>
@@ -18,7 +18,7 @@
 
 
                 <p class="excerpt">@item.description</p>
-                <a href="@Url.Action("Index", "News", new { meta = item.meta })" class="read-more-btn"> read more <i class="fas fa-angle-right"></i></a>
+                <a href="~/@ViewBag.tintuc/@item.meta" class="read-more-btn"> read more <i class="fas fa-angle-right"></i></a>
             </div>
         </div>
     </div>

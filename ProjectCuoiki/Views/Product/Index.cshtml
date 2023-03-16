@@ -7,7 +7,8 @@
 
 
 <!-- breadcrumb-section -->
-<div class="breadcrumb-section breadcrumb-bg">
+ 
+<div class="breadcrumb-section breadcrumb-bg" style=" background-image: url(../../Uploads/img/abt.jpg);">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 offset-lg-2 text-center">
@@ -43,7 +44,7 @@
                 <div class="col-lg-4 col-md-6 text-center">
                     <div class="single-product-item">
                         <div class="product-image">
-                            <a href="@Url.Action("Index", "SingleProduct", new {meta=item.meta},null)"><img src="~/Uploads/img/products/@item.imageProduct.name" alt=""></a>
+                            <a href="~/@ViewBag.sp/@item.typeproduct.meta/@item.meta"><img src="~/Uploads/img/products/@item.imageProduct.name" alt=""></a>
                         </div>
                         <h3>@item.name</h3>
                         <p class="product-price"><span>Per Kg</span> @item.price </p>
@@ -67,5 +68,5 @@
             </div>
         </div>
     </div>
-<!-- end products -->
+    <!-- end products -->
 

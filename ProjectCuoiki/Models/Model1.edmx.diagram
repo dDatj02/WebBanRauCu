@@ -14,7 +14,7 @@
         <EntityTypeShape EntityType="ProjectCuoiKiModel.typeproduct" Width="1.5" PointX="0.75" PointY="5.375" />
         <EntityTypeShape EntityType="ProjectCuoiKiModel.product" Width="1.5" PointX="3" PointY="5" />
         <AssociationConnector Association="ProjectCuoiKiModel.FK_product_typeproduct" />
-        <EntityTypeShape EntityType="ProjectCuoiKiModel.imageProduct" Width="1.5" PointX="5.375" PointY="7" />
+        <EntityTypeShape EntityType="ProjectCuoiKiModel.imageProduct" Width="1.5" PointX="5.5" PointY="6.375" />
         <AssociationConnector Association="ProjectCuoiKiModel.FK_product_imageProduct" />
         <EntityTypeShape EntityType="ProjectCuoiKiModel.news" Width="1.5" PointX="7.375" PointY="6.75" />
       </Diagram>

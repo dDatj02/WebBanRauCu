@@ -18,6 +18,7 @@ namespace ProjectCuoiki.Controllers
         public ActionResult getMenu()
         {
             var listitem =from item in db.menus where item.hide==true orderby item.order ascending  select item;
+            ViewBag.sanpham = "san-pham";
             return PartialView(listitem.ToList());
         }
         public ActionResult getSlideshow()
@@ -49,11 +50,14 @@ namespace ProjectCuoiki.Controllers
         public ActionResult getListNewProductByDate() { 
 
             var listitem=(from item in db.products where item.hide== true orderby item.datebegin ascending select item).Take(6);
+            ViewBag.sp = "san-pham";
+            
             return PartialView(listitem.ToList());
         }
         public ActionResult getNews()
         {
             var listitem = (from item in db.news where item.hide == true orderby item.datebegin ascending select item).Take(3);
+            ViewBag.tintuc = "tin-tuc";
             return PartialView(listitem.ToList());
         }
     }

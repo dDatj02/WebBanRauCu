@@ -15,6 +15,7 @@ namespace ProjectCuoiki.Controllers
         public ActionResult Index(string meta)
         {
             var listitem = from i in db.products where i.typeproduct.meta == meta && i.hide==true orderby i.datebegin ascending select i;
+            ViewBag.sp = "san-pham";
             return View(listitem.ToList().Take(9));
         }
 
