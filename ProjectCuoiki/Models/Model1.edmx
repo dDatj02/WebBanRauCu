@@ -47,6 +47,8 @@ warning 6002: The table/view 'ProjectCuoiKi.dbo.banner' does not have a primary 
           <Property Name="hide" Type="bit" />
           <Property Name="datebegin" Type="smalldatetime" />
           <Property Name="order" Type="int" />
+          <Property Name="img" Type="varbinary(max)" />
+          <Property Name="idproduct" Type="int" />
         </EntityType>
         <EntityType Name="menu">
           <Key>
@@ -75,6 +77,7 @@ warning 6002: The table/view 'ProjectCuoiKi.dbo.banner' does not have a primary 
           <Property Name="img" Type="varchar(max)" />
           <Property Name="content" Type="ntext" />
           <Property Name="author" Type="nvarchar" MaxLength="50" />
+          <Property Name="order" Type="int" />
         </EntityType>
         <EntityType Name="positionbanner">
           <Key>
@@ -83,12 +86,9 @@ warning 6002: The table/view 'ProjectCuoiKi.dbo.banner' does not have a primary 
           <Property Name="positionId" Type="int" Nullable="false" />
           <Property Name="position" Type="nchar" MaxLength="20" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'ProjectCuoiKi.dbo.product' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="product">
           <Key>
             <PropertyRef Name="id" />
-            <PropertyRef Name="price" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="50" />
@@ -101,7 +101,7 @@ warning 6002: The table/view 'ProjectCuoiKi.dbo.product' does not have a primary
           <Property Name="price" Type="int" Nullable="false" />
           <Property Name="idType" Type="int" />
           <Property Name="quantity" Type="int" />
-          <Property Name="idImage" Type="int" />
+          <Property Name="imgname" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="slideshow">
           <Key>
@@ -116,6 +116,17 @@ warning 6002: The table/view 'ProjectCuoiKi.dbo.product' does not have a primary
           <Property Name="hide" Type="bit" />
           <Property Name="datebegin" Type="smalldatetime" />
           <Property Name="text" Type="ntext" />
+          <Property Name="title" Type="ntext" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="typeproduct">
           <Key>
@@ -141,15 +152,15 @@ warning 6002: The table/view 'ProjectCuoiKi.dbo.product' does not have a primary
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_product_imageProduct">
-          <End Role="imageProduct" Type="Self.imageProduct" Multiplicity="0..1" />
-          <End Role="product" Type="Self.product" Multiplicity="*" />
+        <Association Name="FK_imageProduct_product">
+          <End Role="product" Type="Self.product" Multiplicity="0..1" />
+          <End Role="imageProduct" Type="Self.imageProduct" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="imageProduct">
+            <Principal Role="product">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="product">
-              <PropertyRef Name="idImage" />
+            <Dependent Role="imageProduct">
+              <PropertyRef Name="idproduct" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -171,7 +182,9 @@ warning 6002: The table/view 'ProjectCuoiKi.dbo.product' does not have a primary
           <EntitySet Name="menu" EntityType="Self.menu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="news" EntityType="Self.news" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="positionbanner" EntityType="Self.positionbanner" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="product" EntityType="Self.product" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="slideshow" EntityType="Self.slideshow" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="typeproduct" EntityType="Self.typeproduct" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="banner" EntityType="Self.banner" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -187,29 +200,13 @@ warning 6002: The table/view 'ProjectCuoiKi.dbo.product' does not have a primary
 [banner].[positionId] AS [positionId]
 FROM [dbo].[banner] AS [banner]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="product" EntityType="Self.product" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-[product].[id] AS [id], 
-[product].[name] AS [name], 
-[product].[description] AS [description], 
-[product].[link] AS [link], 
-[product].[meta] AS [meta], 
-[product].[hide] AS [hide], 
-[product].[datebegin] AS [datebegin], 
-[product].[order] AS [order], 
-[product].[price] AS [price], 
-[product].[idType] AS [idType], 
-[product].[quantity] AS [quantity], 
-[product].[idImage] AS [idImage]
-FROM [dbo].[product] AS [product]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK_banner_positionbanner" Association="Self.FK_banner_positionbanner">
             <End Role="positionbanner" EntitySet="positionbanner" />
             <End Role="banner" EntitySet="banner" />
           </AssociationSet>
-          <AssociationSet Name="FK_product_imageProduct" Association="Self.FK_product_imageProduct">
-            <End Role="imageProduct" EntitySet="imageProduct" />
+          <AssociationSet Name="FK_imageProduct_product" Association="Self.FK_imageProduct_product">
             <End Role="product" EntitySet="product" />
+            <End Role="imageProduct" EntitySet="imageProduct" />
           </AssociationSet>
           <AssociationSet Name="FK_product_typeproduct" Association="Self.FK_product_typeproduct">
             <End Role="typeproduct" EntitySet="typeproduct" />
@@ -220,41 +217,6 @@ FROM [dbo].[product] AS [product]</DefiningQuery>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ProjectCuoiKiModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="menu">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="link" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="meta" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="hide" Type="Boolean" />
-          <Property Name="order" Type="Int32" />
-          <Property Name="datebegin" Type="DateTime" Precision="0" />
-        </EntityType>
-        <EntityContainer Name="ProjectCuoiKiEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="menus" EntityType="Self.menu" />
-          <EntitySet Name="footers" EntityType="ProjectCuoiKiModel.footer" />
-          <EntitySet Name="banners" EntityType="ProjectCuoiKiModel.banner" />
-          <EntitySet Name="positionbanners" EntityType="ProjectCuoiKiModel.positionbanner" />
-          <AssociationSet Name="FK_banner_positionbanner" Association="ProjectCuoiKiModel.FK_banner_positionbanner">
-            <End Role="positionbanner" EntitySet="positionbanners" />
-            <End Role="banner" EntitySet="banners" />
-          </AssociationSet>
-          <EntitySet Name="slideshows" EntityType="ProjectCuoiKiModel.slideshow" />
-          <EntitySet Name="typeproducts" EntityType="ProjectCuoiKiModel.typeproduct" />
-          <EntitySet Name="products" EntityType="ProjectCuoiKiModel.product" />
-          <AssociationSet Name="FK_product_typeproduct" Association="ProjectCuoiKiModel.FK_product_typeproduct">
-            <End Role="typeproduct" EntitySet="typeproducts" />
-            <End Role="product" EntitySet="products" />
-          </AssociationSet>
-          <EntitySet Name="imageProducts" EntityType="ProjectCuoiKiModel.imageProduct" />
-          <AssociationSet Name="FK_product_imageProduct" Association="ProjectCuoiKiModel.FK_product_imageProduct">
-            <End Role="imageProduct" EntitySet="imageProducts" />
-            <End Role="product" EntitySet="products" />
-          </AssociationSet>
-          <EntitySet Name="news" EntityType="ProjectCuoiKiModel.news" />
-        </EntityContainer>
         <EntityType Name="footer">
           <Key>
             <PropertyRef Name="id" />
@@ -269,101 +231,6 @@ FROM [dbo].[product] AS [product]</DefiningQuery>
           <Property Name="datebegin" Type="DateTime" Precision="0" />
           <Property Name="aboutus" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="banner">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="link" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="img" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="meta" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="hide" Type="Boolean" />
-          <Property Name="datebegin" Type="DateTime" Precision="0" />
-          <Property Name="text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="order" Type="Int32" />
-          <Property Name="positionId" Type="Int32" />
-          <NavigationProperty Name="positionbanner" Relationship="ProjectCuoiKiModel.FK_banner_positionbanner" FromRole="banner" ToRole="positionbanner" />
-        </EntityType>
-        <EntityType Name="positionbanner">
-          <Key>
-            <PropertyRef Name="positionId" />
-          </Key>
-          <Property Name="positionId" Type="Int32" Nullable="false" />
-          <Property Name="position" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
-          <NavigationProperty Name="banners" Relationship="ProjectCuoiKiModel.FK_banner_positionbanner" FromRole="positionbanner" ToRole="banner" />
-        </EntityType>
-        <Association Name="FK_banner_positionbanner">
-          <End Type="ProjectCuoiKiModel.positionbanner" Role="positionbanner" Multiplicity="0..1" />
-          <End Type="ProjectCuoiKiModel.banner" Role="banner" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="positionbanner">
-              <PropertyRef Name="positionId" />
-            </Principal>
-            <Dependent Role="banner">
-              <PropertyRef Name="positionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="slideshow">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="img" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="link" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="meta" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="order" Type="Int32" />
-          <Property Name="hide" Type="Boolean" />
-          <Property Name="datebegin" Type="DateTime" Precision="0" />
-          <Property Name="text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="typeproduct">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="link" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="meta" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="datebegin" Type="DateTime" Precision="0" />
-          <Property Name="order" Type="Int32" />
-          <Property Name="hide" Type="Boolean" />
-          <NavigationProperty Name="products" Relationship="ProjectCuoiKiModel.FK_product_typeproduct" FromRole="typeproduct" ToRole="product" />
-        </EntityType>
-        <EntityType Name="product">
-          <Key>
-            <PropertyRef Name="id" />
-            <PropertyRef Name="price" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="link" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="meta" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="hide" Type="Boolean" />
-          <Property Name="datebegin" Type="DateTime" Precision="0" />
-          <Property Name="order" Type="Int32" />
-          <Property Name="price" Type="Int32" Nullable="false" />
-          <Property Name="idType" Type="Int32" />
-          <Property Name="quantity" Type="Int32" />
-          <NavigationProperty Name="typeproduct" Relationship="ProjectCuoiKiModel.FK_product_typeproduct" FromRole="product" ToRole="typeproduct" />
-          <Property Name="idImage" Type="Int32" />
-          <NavigationProperty Name="imageProduct" Relationship="ProjectCuoiKiModel.FK_product_imageProduct" FromRole="product" ToRole="imageProduct" />
-        </EntityType>
-        <Association Name="FK_product_typeproduct">
-          <End Type="ProjectCuoiKiModel.typeproduct" Role="typeproduct" Multiplicity="0..1" />
-          <End Type="ProjectCuoiKiModel.product" Role="product" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="typeproduct">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="product">
-              <PropertyRef Name="idType" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="imageProduct">
           <Key>
             <PropertyRef Name="id" />
@@ -375,20 +242,22 @@ FROM [dbo].[product] AS [product]</DefiningQuery>
           <Property Name="hide" Type="Boolean" />
           <Property Name="datebegin" Type="DateTime" Precision="0" />
           <Property Name="order" Type="Int32" />
-          <NavigationProperty Name="products" Relationship="ProjectCuoiKiModel.FK_product_imageProduct" FromRole="imageProduct" ToRole="product" />
+          <Property Name="img" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="idproduct" Type="Int32" />
+          <NavigationProperty Name="product" Relationship="Self.FK_imageProduct_product" FromRole="imageProduct" ToRole="product" />
         </EntityType>
-        <Association Name="FK_product_imageProduct">
-          <End Type="ProjectCuoiKiModel.imageProduct" Role="imageProduct" Multiplicity="0..1" />
-          <End Type="ProjectCuoiKiModel.product" Role="product" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="imageProduct">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="product">
-              <PropertyRef Name="idImage" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <EntityType Name="menu">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="link" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="meta" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="hide" Type="Boolean" />
+          <Property Name="order" Type="Int32" />
+          <Property Name="datebegin" Type="DateTime" Precision="0" />
+        </EntityType>
         <EntityType Name="news">
           <Key>
             <PropertyRef Name="id" />
@@ -404,13 +273,185 @@ FROM [dbo].[product] AS [product]</DefiningQuery>
           <Property Name="img" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="author" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="order" Type="Int32" />
         </EntityType>
+        <EntityType Name="positionbanner">
+          <Key>
+            <PropertyRef Name="positionId" />
+          </Key>
+          <Property Name="positionId" Type="Int32" Nullable="false" />
+          <Property Name="position" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="banners" Relationship="Self.FK_banner_positionbanner" FromRole="positionbanner" ToRole="banner" />
+        </EntityType>
+        <EntityType Name="product">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="link" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="meta" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="hide" Type="Boolean" />
+          <Property Name="datebegin" Type="DateTime" Precision="0" />
+          <Property Name="order" Type="Int32" />
+          <Property Name="price" Type="Int32" Nullable="false" />
+          <Property Name="idType" Type="Int32" />
+          <Property Name="quantity" Type="Int32" />
+          <NavigationProperty Name="imageProducts" Relationship="Self.FK_imageProduct_product" FromRole="product" ToRole="imageProduct" />
+          <NavigationProperty Name="typeproduct" Relationship="Self.FK_product_typeproduct" FromRole="product" ToRole="typeproduct" />
+          <Property Name="imgname" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="slideshow">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="img" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="link" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="meta" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="order" Type="Int32" />
+          <Property Name="hide" Type="Boolean" />
+          <Property Name="datebegin" Type="DateTime" Precision="0" />
+          <Property Name="text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="typeproduct">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="link" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="meta" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="datebegin" Type="DateTime" Precision="0" />
+          <Property Name="order" Type="Int32" />
+          <Property Name="hide" Type="Boolean" />
+          <NavigationProperty Name="products" Relationship="Self.FK_product_typeproduct" FromRole="typeproduct" ToRole="product" />
+        </EntityType>
+        <EntityType Name="banner">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="link" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="img" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="meta" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="hide" Type="Boolean" />
+          <Property Name="datebegin" Type="DateTime" Precision="0" />
+          <Property Name="text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="order" Type="Int32" />
+          <Property Name="positionId" Type="Int32" />
+          <NavigationProperty Name="positionbanner" Relationship="Self.FK_banner_positionbanner" FromRole="banner" ToRole="positionbanner" />
+        </EntityType>
+        <Association Name="FK_imageProduct_product">
+          <End Role="product" Type="Self.product" Multiplicity="0..1" />
+          <End Role="imageProduct" Type="Self.imageProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="imageProduct">
+              <PropertyRef Name="idproduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_banner_positionbanner">
+          <End Role="positionbanner" Type="Self.positionbanner" Multiplicity="0..1" />
+          <End Role="banner" Type="Self.banner" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="positionbanner">
+              <PropertyRef Name="positionId" />
+            </Principal>
+            <Dependent Role="banner">
+              <PropertyRef Name="positionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_product_typeproduct">
+          <End Role="typeproduct" Type="Self.typeproduct" Multiplicity="0..1" />
+          <End Role="product" Type="Self.product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="typeproduct">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="product">
+              <PropertyRef Name="idType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ProjectCuoiKiEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="footers" EntityType="Self.footer" />
+          <EntitySet Name="imageProducts" EntityType="Self.imageProduct" />
+          <EntitySet Name="menus" EntityType="Self.menu" />
+          <EntitySet Name="news" EntityType="Self.news" />
+          <EntitySet Name="positionbanners" EntityType="Self.positionbanner" />
+          <EntitySet Name="products" EntityType="Self.product" />
+          <EntitySet Name="slideshows" EntityType="Self.slideshow" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="typeproducts" EntityType="Self.typeproduct" />
+          <EntitySet Name="banners" EntityType="Self.banner" />
+          <AssociationSet Name="FK_imageProduct_product" Association="Self.FK_imageProduct_product">
+            <End Role="product" EntitySet="products" />
+            <End Role="imageProduct" EntitySet="imageProducts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_banner_positionbanner" Association="Self.FK_banner_positionbanner">
+            <End Role="positionbanner" EntitySet="positionbanners" />
+            <End Role="banner" EntitySet="banners" />
+          </AssociationSet>
+          <AssociationSet Name="FK_product_typeproduct" Association="Self.FK_product_typeproduct">
+            <End Role="typeproduct" EntitySet="typeproducts" />
+            <End Role="product" EntitySet="products" />
+          </AssociationSet>
+        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="ProjectCuoiKiModelStoreContainer" CdmEntityContainer="ProjectCuoiKiEntities">
+          <EntitySetMapping Name="footers">
+            <EntityTypeMapping TypeName="ProjectCuoiKiModel.footer">
+              <MappingFragment StoreEntitySet="footer">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="hide" ColumnName="hide" />
+                <ScalarProperty Name="meta" ColumnName="meta" />
+                <ScalarProperty Name="order" ColumnName="order" />
+                <ScalarProperty Name="datebegin" ColumnName="datebegin" />
+                <ScalarProperty Name="aboutus" ColumnName="aboutus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="imageProducts">
+            <EntityTypeMapping TypeName="ProjectCuoiKiModel.imageProduct">
+              <MappingFragment StoreEntitySet="imageProduct">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="link" ColumnName="link" />
+                <ScalarProperty Name="meta" ColumnName="meta" />
+                <ScalarProperty Name="hide" ColumnName="hide" />
+                <ScalarProperty Name="datebegin" ColumnName="datebegin" />
+                <ScalarProperty Name="order" ColumnName="order" />
+                <ScalarProperty Name="img" ColumnName="img" />
+                <ScalarProperty Name="idproduct" ColumnName="idproduct" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="menus">
             <EntityTypeMapping TypeName="ProjectCuoiKiModel.menu">
               <MappingFragment StoreEntitySet="menu">
@@ -424,118 +465,103 @@ FROM [dbo].[product] AS [product]</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="footers">
-            <EntityTypeMapping TypeName="ProjectCuoiKiModel.footer">
-              <MappingFragment StoreEntitySet="footer">
-                <ScalarProperty Name="aboutus" ColumnName="aboutus" />
-                <ScalarProperty Name="datebegin" ColumnName="datebegin" />
+          <EntitySetMapping Name="news">
+            <EntityTypeMapping TypeName="ProjectCuoiKiModel.news">
+              <MappingFragment StoreEntitySet="news">
                 <ScalarProperty Name="order" ColumnName="order" />
-                <ScalarProperty Name="meta" ColumnName="meta" />
-                <ScalarProperty Name="hide" ColumnName="hide" />
-                <ScalarProperty Name="address" ColumnName="address" />
-                <ScalarProperty Name="phone" ColumnName="phone" />
-                <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="banners">
-            <EntityTypeMapping TypeName="ProjectCuoiKiModel.banner">
-              <MappingFragment StoreEntitySet="banner">
-                <ScalarProperty Name="positionId" ColumnName="positionId" />
-                <ScalarProperty Name="order" ColumnName="order" />
-                <ScalarProperty Name="text" ColumnName="text" />
+                <ScalarProperty Name="title" ColumnName="title" />
                 <ScalarProperty Name="datebegin" ColumnName="datebegin" />
-                <ScalarProperty Name="hide" ColumnName="hide" />
-                <ScalarProperty Name="meta" ColumnName="meta" />
-                <ScalarProperty Name="img" ColumnName="img" />
+                <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="link" ColumnName="link" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="meta" ColumnName="meta" />
+                <ScalarProperty Name="hide" ColumnName="hide" />
+                <ScalarProperty Name="dateUpdate" ColumnName="dateUpdate" />
+                <ScalarProperty Name="img" ColumnName="img" />
+                <ScalarProperty Name="content" ColumnName="content" />
+                <ScalarProperty Name="author" ColumnName="author" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="positionbanners">
             <EntityTypeMapping TypeName="ProjectCuoiKiModel.positionbanner">
               <MappingFragment StoreEntitySet="positionbanner">
-                <ScalarProperty Name="position" ColumnName="position" />
                 <ScalarProperty Name="positionId" ColumnName="positionId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="slideshows">
-            <EntityTypeMapping TypeName="ProjectCuoiKiModel.slideshow">
-              <MappingFragment StoreEntitySet="slideshow">
-                <ScalarProperty Name="text" ColumnName="text" />
-                <ScalarProperty Name="datebegin" ColumnName="datebegin" />
-                <ScalarProperty Name="hide" ColumnName="hide" />
-                <ScalarProperty Name="order" ColumnName="order" />
-                <ScalarProperty Name="meta" ColumnName="meta" />
-                <ScalarProperty Name="link" ColumnName="link" />
-                <ScalarProperty Name="img" ColumnName="img" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="typeproducts">
-            <EntityTypeMapping TypeName="ProjectCuoiKiModel.typeproduct">
-              <MappingFragment StoreEntitySet="typeproduct">
-                <ScalarProperty Name="hide" ColumnName="hide" />
-                <ScalarProperty Name="order" ColumnName="order" />
-                <ScalarProperty Name="datebegin" ColumnName="datebegin" />
-                <ScalarProperty Name="meta" ColumnName="meta" />
-                <ScalarProperty Name="link" ColumnName="link" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="position" ColumnName="position" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="products">
             <EntityTypeMapping TypeName="ProjectCuoiKiModel.product">
               <MappingFragment StoreEntitySet="product">
-                <ScalarProperty Name="idImage" ColumnName="idImage" />
-                <ScalarProperty Name="quantity" ColumnName="quantity" />
-                <ScalarProperty Name="idType" ColumnName="idType" />
+                <ScalarProperty Name="imgname" ColumnName="imgname" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="link" ColumnName="link" />
+                <ScalarProperty Name="meta" ColumnName="meta" />
+                <ScalarProperty Name="hide" ColumnName="hide" />
+                <ScalarProperty Name="datebegin" ColumnName="datebegin" />
+                <ScalarProperty Name="order" ColumnName="order" />
                 <ScalarProperty Name="price" ColumnName="price" />
-                <ScalarProperty Name="order" ColumnName="order" />
-                <ScalarProperty Name="datebegin" ColumnName="datebegin" />
-                <ScalarProperty Name="hide" ColumnName="hide" />
-                <ScalarProperty Name="meta" ColumnName="meta" />
-                <ScalarProperty Name="link" ColumnName="link" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="idType" ColumnName="idType" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="imageProducts">
-            <EntityTypeMapping TypeName="ProjectCuoiKiModel.imageProduct">
-              <MappingFragment StoreEntitySet="imageProduct">
-                <ScalarProperty Name="order" ColumnName="order" />
-                <ScalarProperty Name="datebegin" ColumnName="datebegin" />
-                <ScalarProperty Name="hide" ColumnName="hide" />
-                <ScalarProperty Name="meta" ColumnName="meta" />
-                <ScalarProperty Name="link" ColumnName="link" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="news">
-            <EntityTypeMapping TypeName="ProjectCuoiKiModel.news">
-              <MappingFragment StoreEntitySet="news">
-                <ScalarProperty Name="author" ColumnName="author" />
-                <ScalarProperty Name="content" ColumnName="content" />
-                <ScalarProperty Name="img" ColumnName="img" />
-                <ScalarProperty Name="dateUpdate" ColumnName="dateUpdate" />
-                <ScalarProperty Name="hide" ColumnName="hide" />
-                <ScalarProperty Name="meta" ColumnName="meta" />
-                <ScalarProperty Name="link" ColumnName="link" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="datebegin" ColumnName="datebegin" />
+          <EntitySetMapping Name="slideshows">
+            <EntityTypeMapping TypeName="ProjectCuoiKiModel.slideshow">
+              <MappingFragment StoreEntitySet="slideshow">
                 <ScalarProperty Name="title" ColumnName="title" />
                 <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="img" ColumnName="img" />
+                <ScalarProperty Name="link" ColumnName="link" />
+                <ScalarProperty Name="meta" ColumnName="meta" />
+                <ScalarProperty Name="order" ColumnName="order" />
+                <ScalarProperty Name="hide" ColumnName="hide" />
+                <ScalarProperty Name="datebegin" ColumnName="datebegin" />
+                <ScalarProperty Name="text" ColumnName="text" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="ProjectCuoiKiModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="typeproducts">
+            <EntityTypeMapping TypeName="ProjectCuoiKiModel.typeproduct">
+              <MappingFragment StoreEntitySet="typeproduct">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="link" ColumnName="link" />
+                <ScalarProperty Name="meta" ColumnName="meta" />
+                <ScalarProperty Name="datebegin" ColumnName="datebegin" />
+                <ScalarProperty Name="order" ColumnName="order" />
+                <ScalarProperty Name="hide" ColumnName="hide" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="banners">
+            <EntityTypeMapping TypeName="ProjectCuoiKiModel.banner">
+              <MappingFragment StoreEntitySet="banner">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="link" ColumnName="link" />
+                <ScalarProperty Name="img" ColumnName="img" />
+                <ScalarProperty Name="meta" ColumnName="meta" />
+                <ScalarProperty Name="hide" ColumnName="hide" />
+                <ScalarProperty Name="datebegin" ColumnName="datebegin" />
+                <ScalarProperty Name="text" ColumnName="text" />
+                <ScalarProperty Name="order" ColumnName="order" />
+                <ScalarProperty Name="positionId" ColumnName="positionId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

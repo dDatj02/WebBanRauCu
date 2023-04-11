@@ -14,6 +14,11 @@ namespace ProjectCuoiki.Models
     
     public partial class product
     {
+        public product()
+        {
+            this.imageProducts = new HashSet<imageProduct>();
+        }
+    
         public int id { get; set; }
         public string name { get; set; }
         public string description { get; set; }
@@ -25,9 +30,9 @@ namespace ProjectCuoiki.Models
         public int price { get; set; }
         public Nullable<int> idType { get; set; }
         public Nullable<int> quantity { get; set; }
-        public Nullable<int> idImage { get; set; }
+        public string imgname { get; set; }
     
+        public virtual ICollection<imageProduct> imageProducts { get; set; }
         public virtual typeproduct typeproduct { get; set; }
-        public virtual imageProduct imageProduct { get; set; }
     }
 }

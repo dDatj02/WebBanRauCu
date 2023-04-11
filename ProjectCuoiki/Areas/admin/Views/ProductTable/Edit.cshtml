@@ -1,0 +1,126 @@
+﻿@model ProjectCuoiki.Models.product
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/admin/Views/Shared/layout.cshtml";
+}
+
+<div class="container col-md-6">
+    <h2>Edit</h2>
+
+    @using (Html.BeginForm("Edit", "ProductTable", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+<div class="mb-3 input-group">
+    <div class="col-md-9" hidden>
+        <label for="nameproduct-input" class="form-label">Tên sản phẩm</label>
+        <input type="number" class="form-control" id="nameproduct-input" placeholder="Tên sản phẩm" name="id" required value="@Model.id">
+    </div>
+    <div class="col-md-9" hidden>
+        <label for="nameproduct-input" class="form-label">Tên sản phẩm</label>
+        <input type="text" class="form-control" id="nameproduct-input" placeholder="Tên sản phẩm" name="imgname" required value="@Model.imgname">
+    </div>
+    <div class="col-md-9">
+        <label for="nameproduct-input" class="form-label">Tên sản phẩm</label>
+        <input type="text" class="form-control" id="nameproduct-input" placeholder="Tên sản phẩm" name="name" required value="@Model.name">
+    </div>
+    <div class="col-md-3">
+        <label for="typeproduct-input" class="form-label">Loại sản phẩm</label>
+        <select class="form-control" id="typeproduct-input" name="idType">
+            @foreach (var i in ViewBag.listType)
+            {
+                <option value="@i.id">@i.name</option>
+            }
+        </select>
+    </div>
+</div>
+        <div class="d-flex justify-content-between">
+            <div class="col-md-6 mb-3">
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <label for="image-input" class="form-label">Hình ảnh sản phẩm</label>
+
+                        <input type="file" class="form-control-file" id="image" name="image" accept="image/*" onchange="UploadImage()" value="@Model.imgname">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="price-input" class="form-label" >Giá</label>
+
+                        <input type="number" class="form-control" id="price-input" placeholder="Giá" name="price" required value="@Model.price">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="quantity-input" class="form-label">Số lượng</label>
+                        <input type="number" class="form-control" id="quantity-input" placeholder="Số lượng" name="quantity" required value="@Model.quantity">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <label for="order-input" class="form-label">Thứ tự xuất hiện</label>
+                        <input type="number" class="form-control ư" id="order-input" name="order" value="@Model.order">
+
+
+                    </div>
+                </div>
+
+            </div>
+            @* show image when upload *@
+            <div class="col-auto d-flex align-items-center justify-content-center">
+                <img src="~/Uploads/img/products/@Model.imgname" id="showImage" style="max-width:300px;max-height:300px;object-fit:cover" />
+            </div>
+        </div>
+        <div class="mb-3 input-group col-md-6">
+
+        </div>
+
+
+        <div class="mb-3 col-md-12">
+            <label for="Description-input" class="form-label">Mô tả</label>
+            <textarea type="text" class="form-control" id="Description-input" placeholder="Mô tả" name="description">@Model.description</textarea>
+        </div>
+
+
+<div class="mb-3 col-md-12 d-flex">
+    <div class="">
+        Trạng thái:
+        @if (Model.hide == true)
+        {
+            <input type="checkbox" checked class="" id="hide-input" name="hide" value="true">
+            <label for="hide-input" class="form-label ms-3">Ẩn</label>
+
+        }
+        else
+        {
+            <input type="checkbox"  class="" id="hide-input" name="hide" value="true">
+            <label for="hide-input" class="form-label ms-3">Ẩn</label>
+        }
+    </div>
+            <div class="col-md-6 d-flex">
+
+
+            </div>
+
+        </div>
+
+
+        <div class="mb-3 text-center">
+            <a class="btn btn-danger me-3" href="@Url.Action("Index","ProductTable")">Cancle</a>
+            <input type="submit" class="btn btn-primary ms-3" value="Edit">
+        </div>
+    }
+
+
+</div>
+<script>
+
+    const input = document.getElementById('image');
+    const image = document.getElementById('showImage');
+
+    input.addEventListener('change', (e) => {
+        if (e.target.files.length) {
+            const src = URL.createObjectURL(e.target.files[0]);
+            image.src = src;
+        }
+    });
+    CKEDITOR.replace("Description-input")
+
+</script>

@@ -23,5 +23,6 @@ namespace ProjectCuoiki.Models
         public Nullable<bool> hide { get; set; }
         public Nullable<System.DateTime> datebegin { get; set; }
         public string text { get; set; }
+        public string title { get; set; }
     }
 }

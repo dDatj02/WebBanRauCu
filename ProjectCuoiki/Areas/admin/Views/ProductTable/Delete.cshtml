@@ -1,0 +1,14 @@
+﻿@model ProjectCuoiki.Models.product
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Areas/admin/Views/Shared/layout.cshtml";
+}
+
+<h2>Delete</h2>
+<h3>Are you sure you want to delete this?</h3>
+@using (Html.BeginForm("Delete", "ProductTable"))
+{
+    @Html.AntiForgeryToken()
+    <a class="btn btn-light me-3" href="@Url.Action("Index", "ProductTable")">Cancle</a>
+    <input class="btn btn-danger" type="submit" value="Xóa">
+}

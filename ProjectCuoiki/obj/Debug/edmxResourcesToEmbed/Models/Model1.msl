@@ -1,6 +1,36 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="ProjectCuoiKiModelStoreContainer" CdmEntityContainer="ProjectCuoiKiEntities">
+    <EntitySetMapping Name="footers">
+      <EntityTypeMapping TypeName="ProjectCuoiKiModel.footer">
+        <MappingFragment StoreEntitySet="footer">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="address" ColumnName="address" />
+          <ScalarProperty Name="hide" ColumnName="hide" />
+          <ScalarProperty Name="meta" ColumnName="meta" />
+          <ScalarProperty Name="order" ColumnName="order" />
+          <ScalarProperty Name="datebegin" ColumnName="datebegin" />
+          <ScalarProperty Name="aboutus" ColumnName="aboutus" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="imageProducts">
+      <EntityTypeMapping TypeName="ProjectCuoiKiModel.imageProduct">
+        <MappingFragment StoreEntitySet="imageProduct">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="link" ColumnName="link" />
+          <ScalarProperty Name="meta" ColumnName="meta" />
+          <ScalarProperty Name="hide" ColumnName="hide" />
+          <ScalarProperty Name="datebegin" ColumnName="datebegin" />
+          <ScalarProperty Name="order" ColumnName="order" />
+          <ScalarProperty Name="img" ColumnName="img" />
+          <ScalarProperty Name="idproduct" ColumnName="idproduct" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="menus">
       <EntityTypeMapping TypeName="ProjectCuoiKiModel.menu">
         <MappingFragment StoreEntitySet="menu">
@@ -14,118 +44,103 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="footers">
-      <EntityTypeMapping TypeName="ProjectCuoiKiModel.footer">
-        <MappingFragment StoreEntitySet="footer">
-          <ScalarProperty Name="aboutus" ColumnName="aboutus" />
-          <ScalarProperty Name="datebegin" ColumnName="datebegin" />
+    <EntitySetMapping Name="news">
+      <EntityTypeMapping TypeName="ProjectCuoiKiModel.news">
+        <MappingFragment StoreEntitySet="news">
           <ScalarProperty Name="order" ColumnName="order" />
-          <ScalarProperty Name="meta" ColumnName="meta" />
-          <ScalarProperty Name="hide" ColumnName="hide" />
-          <ScalarProperty Name="address" ColumnName="address" />
-          <ScalarProperty Name="phone" ColumnName="phone" />
-          <ScalarProperty Name="email" ColumnName="email" />
           <ScalarProperty Name="id" ColumnName="id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="banners">
-      <EntityTypeMapping TypeName="ProjectCuoiKiModel.banner">
-        <MappingFragment StoreEntitySet="banner">
-          <ScalarProperty Name="positionId" ColumnName="positionId" />
-          <ScalarProperty Name="order" ColumnName="order" />
-          <ScalarProperty Name="text" ColumnName="text" />
+          <ScalarProperty Name="title" ColumnName="title" />
           <ScalarProperty Name="datebegin" ColumnName="datebegin" />
-          <ScalarProperty Name="hide" ColumnName="hide" />
-          <ScalarProperty Name="meta" ColumnName="meta" />
-          <ScalarProperty Name="img" ColumnName="img" />
+          <ScalarProperty Name="description" ColumnName="description" />
           <ScalarProperty Name="link" ColumnName="link" />
-          <ScalarProperty Name="name" ColumnName="name" />
-          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="meta" ColumnName="meta" />
+          <ScalarProperty Name="hide" ColumnName="hide" />
+          <ScalarProperty Name="dateUpdate" ColumnName="dateUpdate" />
+          <ScalarProperty Name="img" ColumnName="img" />
+          <ScalarProperty Name="content" ColumnName="content" />
+          <ScalarProperty Name="author" ColumnName="author" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="positionbanners">
       <EntityTypeMapping TypeName="ProjectCuoiKiModel.positionbanner">
         <MappingFragment StoreEntitySet="positionbanner">
-          <ScalarProperty Name="position" ColumnName="position" />
           <ScalarProperty Name="positionId" ColumnName="positionId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="slideshows">
-      <EntityTypeMapping TypeName="ProjectCuoiKiModel.slideshow">
-        <MappingFragment StoreEntitySet="slideshow">
-          <ScalarProperty Name="text" ColumnName="text" />
-          <ScalarProperty Name="datebegin" ColumnName="datebegin" />
-          <ScalarProperty Name="hide" ColumnName="hide" />
-          <ScalarProperty Name="order" ColumnName="order" />
-          <ScalarProperty Name="meta" ColumnName="meta" />
-          <ScalarProperty Name="link" ColumnName="link" />
-          <ScalarProperty Name="img" ColumnName="img" />
-          <ScalarProperty Name="name" ColumnName="name" />
-          <ScalarProperty Name="id" ColumnName="id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="typeproducts">
-      <EntityTypeMapping TypeName="ProjectCuoiKiModel.typeproduct">
-        <MappingFragment StoreEntitySet="typeproduct">
-          <ScalarProperty Name="hide" ColumnName="hide" />
-          <ScalarProperty Name="order" ColumnName="order" />
-          <ScalarProperty Name="datebegin" ColumnName="datebegin" />
-          <ScalarProperty Name="meta" ColumnName="meta" />
-          <ScalarProperty Name="link" ColumnName="link" />
-          <ScalarProperty Name="name" ColumnName="name" />
-          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="position" ColumnName="position" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="products">
       <EntityTypeMapping TypeName="ProjectCuoiKiModel.product">
         <MappingFragment StoreEntitySet="product">
-          <ScalarProperty Name="idImage" ColumnName="idImage" />
-          <ScalarProperty Name="quantity" ColumnName="quantity" />
-          <ScalarProperty Name="idType" ColumnName="idType" />
+          <ScalarProperty Name="imgname" ColumnName="imgname" />
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="link" ColumnName="link" />
+          <ScalarProperty Name="meta" ColumnName="meta" />
+          <ScalarProperty Name="hide" ColumnName="hide" />
+          <ScalarProperty Name="datebegin" ColumnName="datebegin" />
+          <ScalarProperty Name="order" ColumnName="order" />
           <ScalarProperty Name="price" ColumnName="price" />
-          <ScalarProperty Name="order" ColumnName="order" />
-          <ScalarProperty Name="datebegin" ColumnName="datebegin" />
-          <ScalarProperty Name="hide" ColumnName="hide" />
-          <ScalarProperty Name="meta" ColumnName="meta" />
-          <ScalarProperty Name="link" ColumnName="link" />
-          <ScalarProperty Name="description" ColumnName="description" />
-          <ScalarProperty Name="name" ColumnName="name" />
-          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="idType" ColumnName="idType" />
+          <ScalarProperty Name="quantity" ColumnName="quantity" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="imageProducts">
-      <EntityTypeMapping TypeName="ProjectCuoiKiModel.imageProduct">
-        <MappingFragment StoreEntitySet="imageProduct">
-          <ScalarProperty Name="order" ColumnName="order" />
-          <ScalarProperty Name="datebegin" ColumnName="datebegin" />
-          <ScalarProperty Name="hide" ColumnName="hide" />
-          <ScalarProperty Name="meta" ColumnName="meta" />
-          <ScalarProperty Name="link" ColumnName="link" />
-          <ScalarProperty Name="name" ColumnName="name" />
-          <ScalarProperty Name="id" ColumnName="id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="news">
-      <EntityTypeMapping TypeName="ProjectCuoiKiModel.news">
-        <MappingFragment StoreEntitySet="news">
-          <ScalarProperty Name="author" ColumnName="author" />
-          <ScalarProperty Name="content" ColumnName="content" />
-          <ScalarProperty Name="img" ColumnName="img" />
-          <ScalarProperty Name="dateUpdate" ColumnName="dateUpdate" />
-          <ScalarProperty Name="hide" ColumnName="hide" />
-          <ScalarProperty Name="meta" ColumnName="meta" />
-          <ScalarProperty Name="link" ColumnName="link" />
-          <ScalarProperty Name="description" ColumnName="description" />
-          <ScalarProperty Name="datebegin" ColumnName="datebegin" />
+    <EntitySetMapping Name="slideshows">
+      <EntityTypeMapping TypeName="ProjectCuoiKiModel.slideshow">
+        <MappingFragment StoreEntitySet="slideshow">
           <ScalarProperty Name="title" ColumnName="title" />
           <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="img" ColumnName="img" />
+          <ScalarProperty Name="link" ColumnName="link" />
+          <ScalarProperty Name="meta" ColumnName="meta" />
+          <ScalarProperty Name="order" ColumnName="order" />
+          <ScalarProperty Name="hide" ColumnName="hide" />
+          <ScalarProperty Name="datebegin" ColumnName="datebegin" />
+          <ScalarProperty Name="text" ColumnName="text" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="ProjectCuoiKiModel.sysdiagram">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="typeproducts">
+      <EntityTypeMapping TypeName="ProjectCuoiKiModel.typeproduct">
+        <MappingFragment StoreEntitySet="typeproduct">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="link" ColumnName="link" />
+          <ScalarProperty Name="meta" ColumnName="meta" />
+          <ScalarProperty Name="datebegin" ColumnName="datebegin" />
+          <ScalarProperty Name="order" ColumnName="order" />
+          <ScalarProperty Name="hide" ColumnName="hide" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="banners">
+      <EntityTypeMapping TypeName="ProjectCuoiKiModel.banner">
+        <MappingFragment StoreEntitySet="banner">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="link" ColumnName="link" />
+          <ScalarProperty Name="img" ColumnName="img" />
+          <ScalarProperty Name="meta" ColumnName="meta" />
+          <ScalarProperty Name="hide" ColumnName="hide" />
+          <ScalarProperty Name="datebegin" ColumnName="datebegin" />
+          <ScalarProperty Name="text" ColumnName="text" />
+          <ScalarProperty Name="order" ColumnName="order" />
+          <ScalarProperty Name="positionId" ColumnName="positionId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

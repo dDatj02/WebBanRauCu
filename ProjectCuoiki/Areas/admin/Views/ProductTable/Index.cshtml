@@ -1,0 +1,61 @@
+﻿@model IEnumerable<ProjectCuoiki.Models.product>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/admin/Views/Shared/layout.cshtml";
+}
+
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Table Products</h1>
+    <a class="btn btn-primary my-3  " href="@Url.Action("CreateProduct","ProductTable")">Add new</a>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4 ">
+        <div class="card-header py-3 d-flex justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+            <select class="form-control" style="width:200px" id="Type">
+                <option value="">Tất cả loại sản phẩm</option>
+                @foreach (var i in ViewBag.listType)
+                {
+                    <option value="@i.id">@i.name</option>
+                }
+            </select>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive" id="getProduct"> 
+              
+                
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+
+<script>
+    $(document).ready(function () {
+        function getProduct() {
+            var typeId = $("#Type").val();
+            $.ajax({
+                url: ' @Url.Action("getProductByType","ProductTable")',
+                type: "GET",
+                data: { id: typeId },
+                success: function (data) {
+                    $("#getProduct").html(data);
+                },
+                error: function (data) {
+                    alert('Something went wrong');
+                }
+            });
+        }
+        getProduct();
+        $("#Type").change(function () {
+            getProduct();
+        })
+    });
+</script>
+<!-- /.container-fluid -->

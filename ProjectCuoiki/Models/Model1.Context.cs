@@ -25,14 +25,15 @@ namespace ProjectCuoiki.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public DbSet<menu> menus { get; set; }
         public DbSet<footer> footers { get; set; }
-        public DbSet<banner> banners { get; set; }
-        public DbSet<positionbanner> positionbanners { get; set; }
-        public DbSet<slideshow> slideshows { get; set; }
-        public DbSet<typeproduct> typeproducts { get; set; }
-        public DbSet<product> products { get; set; }
         public DbSet<imageProduct> imageProducts { get; set; }
+        public DbSet<menu> menus { get; set; }
         public DbSet<news> news { get; set; }
+        public DbSet<positionbanner> positionbanners { get; set; }
+        public DbSet<product> products { get; set; }
+        public DbSet<slideshow> slideshows { get; set; }
+        public DbSet<sysdiagram> sysdiagrams { get; set; }
+        public DbSet<typeproduct> typeproducts { get; set; }
+        public DbSet<banner> banners { get; set; }
     }
 }

@@ -1,0 +1,59 @@
+﻿@model ProjectCuoiki.Models.typeproduct
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/admin/Views/Shared/layout.cshtml";
+}
+
+<h2>Create</h2>
+<div class="col-md-6 mx-auto">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>typeproduct</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.name, "Tên loại sản phẩm", htmlAttributes: new { @class = "control-label " })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+
+
+
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.order,"Thứ tự", htmlAttributes: new { @class = "control-label " })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.order, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.order, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    <div class="">
+                        Trạng thái:
+                        <input type="checkbox" class="" id="hide-input" name="hide" value="true">
+                        <label for="hide-input" class="form-label ms-3">Ẩn</label>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="mb-3 text-center">
+                <a class="btn btn-danger me-3" href="@Url.Action("Index","Typeproducts")">Cancle</a>
+                <input type="submit" class="btn btn-primary ms-3" value="Add">
+            </div>
+        </div>
+    }
+
+
+</div>

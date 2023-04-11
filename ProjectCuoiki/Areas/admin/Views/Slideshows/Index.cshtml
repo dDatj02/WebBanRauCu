@@ -1,0 +1,85 @@
+﻿@model IEnumerable<ProjectCuoiki.Models.slideshow>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/admin/Views/Shared/layout.cshtml";
+}
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Table Products</h1>
+    <a class="btn btn-primary my-3  " href="@Url.Action("Create","Slideshows")">Add new</a>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4 ">
+        <div class="card-header py-3 d-flex justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+            @*<select class="form-control" style="width:200px" id="Type">
+                    <option value="">Tất cả loại sản phẩm</option>
+                    @foreach (var i in ViewBag.listType)
+                    {
+                        <option value="@i.id">@i.name</option>
+                    }
+                </select>*@
+        </div>
+        <div class="card-body">
+            <div class="table-responsive" id="getProduct">
+                <table class="table table-bordered text-center " id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Tiêu đề</th>
+                            <th>Hình ảnh</th>
+                            <th>Thứ tự</th>
+                            <th>Ngày tạo</th>
+                            <th>Công bố</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Tiêu đề</th>
+                            <th>Hình ảnh</th>
+                            <th>Thứ tự</th>
+                            <th>Ngày tạo</th>
+                            <th>Công bố</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+
+
+
+
+
+                        @foreach (var i in Model)
+                        {
+                            <tr>
+                                <td>@i.title</td>
+                                <td><img src="~/Uploads/img/slide/@i.name" style="max-width:150px;object-fit:cover;" /></td>
+                                <td>@i.order</td>
+                                <td>@i.datebegin</td>
+                                <td>
+                                    @if (i.hide == true)
+                                    {
+                                        <i class="fas fa-times" style="color: #f70808;"></i>
+
+                                    }
+                                    else
+                                    {
+                                        <i class="fas fa-check" style="color: #18f109;"></i>
+
+                                    }
+                                </td>
+                                <td><a class="btn btn-primary" href="@Url.Action("Edit","Slideshows", new {id=i.id})">Sửa</a><a href="@Url.Action("Delete","Slideshows", new {id=i.id})" class="btn btn-danger">Xóa</a></td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+</div>

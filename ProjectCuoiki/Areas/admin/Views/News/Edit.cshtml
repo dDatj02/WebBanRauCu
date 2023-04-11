@@ -1,0 +1,123 @@
+﻿@model ProjectCuoiki.Models.news
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/admin/Views/Shared/layout.cshtml";
+}
+
+<div class="container col-md-6">
+    <h2>Edit</h2>
+
+    @using (Html.BeginForm("Edit", "News", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+<div class="mb-3 input-group">
+    <div class="col-md-12" hidden>
+        <input type="text" class="form-control" id="" placeholder="" name="id" required value="@Model.id">
+    </div>
+    <div class="col-md-12" hidden>
+        <input type="text" class="form-control" id="" placeholder="" name="datebegin" required value="@Model.datebegin">
+    </div>
+    <div class="col-md-12">
+        <label for="nameproduct-input" class="form-label">Tiêu đề</label>
+        <input type="text" class="form-control" id="nameproduct-input" placeholder="Tiêu đề" name="title" required value="@Model.title">
+    </div>
+
+</div>
+        <div class="d-flex justify-content-between">
+            <div class="col-md-6 mb-3">
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <label for="image-input" class="form-label">Hình ảnh </label>
+
+                        <input type="file" class="form-control-file" id="image" name="image" accept="image/*" onchange="UploadImage()">
+                    </div>
+                </div>
+                <div class="row" hidden>
+                    <div class="col-md-12">
+                        <label for="" class="form-label">ảnh</label>
+
+                        <input type="text" class="form-control" id="" placeholder="Tác giả" name="img" required value="@Model.img">
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="price-input" class="form-label">Tác giả</label>
+
+                        <input type="text" class="form-control" id="price-input" placeholder="Tác giả" name="author" required value="@Model.author">
+                    </div>
+
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <label for="order-input" class="form-label">Thứ tự xuất hiện</label>
+                        <input type="number" class="form-control ư" id="order-input" name="order" required value="@Model.order">
+
+
+                    </div>
+                </div>
+
+            </div>
+            @* show image when upload *@
+            <div class="col-auto d-flex align-items-center justify-content-center">
+                <img src="~/Uploads/img/latest-news/@Model.img" id="showImage" style="max-width:300px;max-height:300px;object-fit:cover" />
+            </div>
+        </div>
+        <div class="mb-3 input-group col-md-6">
+
+        </div>
+
+
+        <div class="mb-3 col-md-12">
+            <label for="Description-input" class="form-label">Mô tả</label>
+            <textarea type="text" class="form-control" id="Description-input" placeholder="Mô tả" name="description" required>@Model.description</textarea>
+        </div>
+        <div class="mb-3 col-md-12">
+            <label for="content-input" class="form-label">Mô tả</label>
+            <textarea type="text" class="form-control" id="content-input" placeholder="Nội dung" name="content" required>@Html.Raw(Model.content)</textarea>
+        </div>
+        <div class="mb-3 col-md-12 d-flex">
+            <div class="">
+                Trạng thái:
+                @if (Model.hide == true)
+                {
+                    <input type="checkbox" checked class="" id="hide-input" name="hide" value="true">
+                    <label for="hide-input" class="form-label ms-3">Ẩn</label>
+
+                }
+                else
+                {
+                    <input type="checkbox" class="" id="hide-input" name="hide" value="true">
+                    <label for="hide-input" class="form-label ms-3">Ẩn</label>
+                }
+            </div>
+            <div class="col-md-6 d-flex">
+
+
+            </div>
+
+        </div>
+
+
+        <div class="mb-3 text-center">
+            <a class="btn btn-danger me-3" href="@Url.Action("Index","News")">Cancle</a>
+            <input type="submit" class="btn btn-primary ms-3" value="Edit">
+        </div>
+    }
+
+
+</div>
+<script>
+
+    const input = document.getElementById('image');
+    const image = document.getElementById('showImage');
+
+    input.addEventListener('change', (e) => {
+        if (e.target.files.length) {
+            const src = URL.createObjectURL(e.target.files[0]);
+            image.src = src;
+        }
+    });
+    CKEDITOR.replace("content-input")
+</script>

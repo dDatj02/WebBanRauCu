@@ -42,6 +42,8 @@ warning 6002: The table/view 'ProjectCuoiKi.dbo.banner' does not have a primary 
     <Property Name="hide" Type="bit" />
     <Property Name="datebegin" Type="smalldatetime" />
     <Property Name="order" Type="int" />
+    <Property Name="img" Type="varbinary(max)" />
+    <Property Name="idproduct" Type="int" />
   </EntityType>
   <EntityType Name="menu">
     <Key>
@@ -70,6 +72,7 @@ warning 6002: The table/view 'ProjectCuoiKi.dbo.banner' does not have a primary 
     <Property Name="img" Type="varchar(max)" />
     <Property Name="content" Type="ntext" />
     <Property Name="author" Type="nvarchar" MaxLength="50" />
+    <Property Name="order" Type="int" />
   </EntityType>
   <EntityType Name="positionbanner">
     <Key>
@@ -78,12 +81,9 @@ warning 6002: The table/view 'ProjectCuoiKi.dbo.banner' does not have a primary 
     <Property Name="positionId" Type="int" Nullable="false" />
     <Property Name="position" Type="nchar" MaxLength="20" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'ProjectCuoiKi.dbo.product' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="product">
     <Key>
       <PropertyRef Name="id" />
-      <PropertyRef Name="price" />
     </Key>
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="name" Type="nvarchar" MaxLength="50" />
@@ -96,7 +96,7 @@ warning 6002: The table/view 'ProjectCuoiKi.dbo.product' does not have a primary
     <Property Name="price" Type="int" Nullable="false" />
     <Property Name="idType" Type="int" />
     <Property Name="quantity" Type="int" />
-    <Property Name="idImage" Type="int" />
+    <Property Name="imgname" Type="varchar(max)" />
   </EntityType>
   <EntityType Name="slideshow">
     <Key>
@@ -111,6 +111,17 @@ warning 6002: The table/view 'ProjectCuoiKi.dbo.product' does not have a primary
     <Property Name="hide" Type="bit" />
     <Property Name="datebegin" Type="smalldatetime" />
     <Property Name="text" Type="ntext" />
+    <Property Name="title" Type="ntext" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
   </EntityType>
   <EntityType Name="typeproduct">
     <Key>
@@ -136,15 +147,15 @@ warning 6002: The table/view 'ProjectCuoiKi.dbo.product' does not have a primary
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_product_imageProduct">
-    <End Role="imageProduct" Type="Self.imageProduct" Multiplicity="0..1" />
-    <End Role="product" Type="Self.product" Multiplicity="*" />
+  <Association Name="FK_imageProduct_product">
+    <End Role="product" Type="Self.product" Multiplicity="0..1" />
+    <End Role="imageProduct" Type="Self.imageProduct" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="imageProduct">
+      <Principal Role="product">
         <PropertyRef Name="id" />
       </Principal>
-      <Dependent Role="product">
-        <PropertyRef Name="idImage" />
+      <Dependent Role="imageProduct">
+        <PropertyRef Name="idproduct" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -166,7 +177,9 @@ warning 6002: The table/view 'ProjectCuoiKi.dbo.product' does not have a primary
     <EntitySet Name="menu" EntityType="Self.menu" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="news" EntityType="Self.news" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="positionbanner" EntityType="Self.positionbanner" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="product" EntityType="Self.product" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="slideshow" EntityType="Self.slideshow" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="typeproduct" EntityType="Self.typeproduct" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="banner" EntityType="Self.banner" store:Type="Tables" store:Schema="dbo">
       <DefiningQuery>SELECT 
@@ -182,29 +195,13 @@ warning 6002: The table/view 'ProjectCuoiKi.dbo.product' does not have a primary
 [banner].[positionId] AS [positionId]
 FROM [dbo].[banner] AS [banner]</DefiningQuery>
     </EntitySet>
-    <EntitySet Name="product" EntityType="Self.product" store:Type="Tables" store:Schema="dbo">
-      <DefiningQuery>SELECT 
-[product].[id] AS [id], 
-[product].[name] AS [name], 
-[product].[description] AS [description], 
-[product].[link] AS [link], 
-[product].[meta] AS [meta], 
-[product].[hide] AS [hide], 
-[product].[datebegin] AS [datebegin], 
-[product].[order] AS [order], 
-[product].[price] AS [price], 
-[product].[idType] AS [idType], 
-[product].[quantity] AS [quantity], 
-[product].[idImage] AS [idImage]
-FROM [dbo].[product] AS [product]</DefiningQuery>
-    </EntitySet>
     <AssociationSet Name="FK_banner_positionbanner" Association="Self.FK_banner_positionbanner">
       <End Role="positionbanner" EntitySet="positionbanner" />
       <End Role="banner" EntitySet="banner" />
     </AssociationSet>
-    <AssociationSet Name="FK_product_imageProduct" Association="Self.FK_product_imageProduct">
-      <End Role="imageProduct" EntitySet="imageProduct" />
+    <AssociationSet Name="FK_imageProduct_product" Association="Self.FK_imageProduct_product">
       <End Role="product" EntitySet="product" />
+      <End Role="imageProduct" EntitySet="imageProduct" />
     </AssociationSet>
     <AssociationSet Name="FK_product_typeproduct" Association="Self.FK_product_typeproduct">
       <End Role="typeproduct" EntitySet="typeproduct" />

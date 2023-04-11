@@ -25,5 +25,6 @@ namespace ProjectCuoiki.Models
         public string img { get; set; }
         public string content { get; set; }
         public string author { get; set; }
+        public Nullable<int> order { get; set; }
     }
 }

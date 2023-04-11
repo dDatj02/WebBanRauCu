@@ -22,6 +22,9 @@
     <!-- Custom styles for this page -->
     <link href="~/Areas/admin/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
+    <script src="~/Areas/Admin/plugin/ckfinder/ckfinder.js"></script>
+    <script src="~/Areas/Admin/plugin/ckeditor/ckeditor.js"></script>
+
 </head>
 
 <body id="page-top">
@@ -33,7 +36,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="@Url.Action("Index","HomeAdmin")">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
@@ -112,7 +115,7 @@
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Login Screens:</h6>
-                        <a class="collapse-item" href="login.html">Login</a>
+                        <a class="collapse-item" href="~/Default/Index">Home Page</a>
                         <a class="collapse-item" href="register.html">Register</a>
                         <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
                         <div class="collapse-divider"></div>
@@ -132,11 +135,24 @@
             </li>
 
             <!-- Nav Item - Tables -->
-            <li class="nav-item active">
-                <a class="nav-link" href="tables.html">
-                    <i class="fas fa-fw fa-table"></i>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable"
+                   aria-expanded="true" aria-controls="collapseTable">
+                    <i class="fas fa-fw fa-folder"></i>
                     <span>Tables</span>
                 </a>
+                <div id="collapseTable" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        @*<h6 class="collapse-header">Login Screens:</h6>*@
+                        <a class="collapse-item" href="@Url.Action("Index","ProductTable")">Product</a>
+                        <a class="collapse-item" href="@Url.Action("Index","News")">News</a>
+                        <a class="collapse-item" href="@Url.Action("Index","Typeproducts")">Category</a>
+                        @*<div class="collapse-divider"></div>*@
+                        <h6 class="collapse-header">Other Pages:</h6>
+                        <a class="collapse-item" href="@Url.Action("Index","Slideshows")">Slide Show</a>
+                        <a class="collapse-item" href="blank.html">Blank Page</a>
+                    </div>
+                </div>
             </li>
 
             <!-- Divider -->
