@@ -48,7 +48,7 @@
                         </div>
                         <h3>@item.name</h3>
                         <p class="product-price"><span>Per Kg</span> @item.price </p>
-                        <a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+                        <a href="@Url.Action("AddCart", "Cart", new {@idProduct=@item.id})" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
                     </div>
                 </div>
             }
@@ -60,23 +60,37 @@
                     <ul>
                         @if (ViewBag.CurrentPage == 1)
                         {
-                            <li><a href="#">Prev</a></li>
+                            <li><a href="#" class="disabled">Prev</a></li>
+
+                        }
+                        else
+                        {
+                            <li><a href="~/@ViewBag.sp/@Model.First().typeproduct.meta?page=@(ViewBag.CurrentPage -1)">Prev</a></li>
 
                         }
                         @for (int i = 1; i <= ViewBag.NoOfPage; i++)
                         {
                             if (i == ViewBag.CurrentPage)
                             {
-                                <li><a class="active" href="~/@ViewBag.sp/@Model.First().typeproduct.meta">@i</a></li>
+                                <li><a class="active" href="~/@ViewBag.sp/@Model.First().typeproduct.meta?page=@i">@i</a></li>
                             }
                             else
                             {
-                                <li><a href="~/@ViewBag.sp/@Model.First().typeproduct.meta">@i</a></li>
+                                <li><a href="~/@ViewBag.sp/@Model.First().typeproduct.meta?page=@i">@i</a></li>
                             }
                         }
 
 
-                        <li><a href="#">Next</a></li>
+                        @if (ViewBag.CurrentPage == ViewBag.NoOfPage)
+                        {
+                            <li class="disabled"><a href="#" class="disabled">Next</a></li>
+
+                        }
+                        else
+                        {
+                            <li><a href="~/@ViewBag.sp/@Model.First().typeproduct.meta?page=@(ViewBag.CurrentPage +1)">Prev</a></li>
+
+                        }
                     </ul>
                 </div>
             </div>

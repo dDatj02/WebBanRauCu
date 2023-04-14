@@ -97,8 +97,24 @@ namespace ProjectCuoiki.Areas.admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,name,img,link,meta,order,hide,datebegin,text")] slideshow slideshow)
+        public ActionResult Edit([Bind(Include = "id,name,img,link,meta,order,hide,datebegin,text,title")] slideshow slideshow , HttpPostedFileBase image)
         {
+            var path = "";
+            var filename = "";
+            slideshow.datebegin = DateTime.Now;
+            slideshow.meta = Functions.convertToUnSign(slideshow.name + slideshow.datebegin.GetValueOrDefault().ToString("ss-mm-hh-dd-mm-yyyy")).Replace(" ", "-");
+            if (slideshow.hide == null)
+            {
+                slideshow.hide = false;
+            }
+            if (image != null)
+            {
+                filename = image.FileName;
+                filename = filename.Replace(".", slideshow.datebegin.GetValueOrDefault().ToString("ss-mm-hh-dd-mm-yyyy" + "."));
+                path = Path.Combine(Server.MapPath("~/Uploads/img/slide"), filename);
+                image.SaveAs(path);
+                slideshow.name = filename;
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(slideshow).State = EntityState.Modified;

@@ -5,7 +5,7 @@
     Layout = "~/Areas/admin/Views/Shared/layout.cshtml";
 }
 
-<<div class="container col-md-6">
+<div class="container col-md-6">
     <h2>Create</h2>
 
     @using (Html.BeginForm("Create", "Slideshows", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -68,8 +68,8 @@
 
 
         <div class="mb-3 text-center">
-            <a class="btn btn-danger me-3" href="@Url.Action("Index","Slideshows")">Cancle</a>
-            <input type="submit" class="btn btn-primary ms-3" value="Add">
+            <a class="btn btn-danger me-3" href="@Url.Action("Index","Slideshows")">Hủy</a>
+            <input type="submit" class="btn btn-primary ms-3" value="Thêm">
         </div>
 
     }

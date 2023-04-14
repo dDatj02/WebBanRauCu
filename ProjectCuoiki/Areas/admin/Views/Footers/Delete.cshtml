@@ -1,0 +1,19 @@
+﻿@model ProjectCuoiki.Models.footer
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Areas/admin/Views/Shared/layout.cshtml";
+}
+
+<div class="col-md-6 mx-auto text-center mt-5">
+    <h2>Loại Sản phẩm</h2>
+    <h3>Bạn có chắc chắn xóa không?</h3>
+    @using (Html.BeginForm("Delete", "Footers"))
+    {
+        @Html.AntiForgeryToken()
+        <div class="mt-4">
+            <a class="btn btn-light me-3" href="@Url.Action("Index", "Footers")">Hủy</a>
+            <input class="btn btn-danger" type="submit" value="Xóa">
+        </div>
+    }
+</div>
