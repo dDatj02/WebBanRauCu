@@ -88,6 +88,9 @@ namespace ProjectCuoiki.Areas.admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "id,name,link,meta,datebegin,order,hide")] typeproduct typeproduct)
         {
+            if (typeproduct.datebegin == null){
+                typeproduct.datebegin = DateTime.Now;
+            }
             if (typeproduct.hide == null)
             {
                 typeproduct.hide = false;

@@ -17,6 +17,7 @@ namespace ProjectCuoiki.Models
         public product()
         {
             this.imageProducts = new HashSet<imageProduct>();
+            this.InvoiceDetails = new HashSet<InvoiceDetail>();
         }
     
         public int id { get; set; }
@@ -27,12 +28,13 @@ namespace ProjectCuoiki.Models
         public Nullable<bool> hide { get; set; }
         public Nullable<System.DateTime> datebegin { get; set; }
         public Nullable<int> order { get; set; }
-        public int price { get; set; }
+        public Nullable<decimal> price { get; set; }
         public Nullable<int> idType { get; set; }
         public Nullable<int> quantity { get; set; }
         public string imgname { get; set; }
     
         public virtual ICollection<imageProduct> imageProducts { get; set; }
+        public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; }
         public virtual typeproduct typeproduct { get; set; }
     }
 }

@@ -30,10 +30,12 @@ namespace ProjectCuoiki.Models
         public DbSet<menu> menus { get; set; }
         public DbSet<news> news { get; set; }
         public DbSet<positionbanner> positionbanners { get; set; }
-        public DbSet<product> products { get; set; }
         public DbSet<slideshow> slideshows { get; set; }
         public DbSet<sysdiagram> sysdiagrams { get; set; }
         public DbSet<typeproduct> typeproducts { get; set; }
         public DbSet<banner> banners { get; set; }
+        public DbSet<Invoice> Invoices { get; set; }
+        public DbSet<InvoiceDetail> InvoiceDetails { get; set; }
+        public DbSet<product> products { get; set; }
     }
 }

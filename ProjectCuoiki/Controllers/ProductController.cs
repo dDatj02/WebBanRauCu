@@ -18,14 +18,17 @@ namespace ProjectCuoiki.Controllers
             ViewBag.sp = "san-pham";
             int NoOfRecordOnPage = 9;
             int NoOfPage = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(db.products.Count()) / Convert.ToDouble(NoOfRecordOnPage)));
+            if (page == null)
+            {
+                page= 1;
+            }
             ViewBag.NoOffPage = NoOfPage;
             ViewBag.CurrentPage = page;
-            if (page != null ) { 
+         
               
                 int NoOffRecordSkip = (int)(page - 1) * NoOfRecordOnPage;
                 return View(listitem.Skip(NoOffRecordSkip).Take(9).ToList());
-            }
-            return View(listitem.ToList().Take(9));
+           
         }
 
     }

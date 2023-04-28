@@ -70,24 +70,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="products">
-      <EntityTypeMapping TypeName="ProjectCuoiKiModel.product">
-        <MappingFragment StoreEntitySet="product">
-          <ScalarProperty Name="imgname" ColumnName="imgname" />
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="name" ColumnName="name" />
-          <ScalarProperty Name="description" ColumnName="description" />
-          <ScalarProperty Name="link" ColumnName="link" />
-          <ScalarProperty Name="meta" ColumnName="meta" />
-          <ScalarProperty Name="hide" ColumnName="hide" />
-          <ScalarProperty Name="datebegin" ColumnName="datebegin" />
-          <ScalarProperty Name="order" ColumnName="order" />
-          <ScalarProperty Name="price" ColumnName="price" />
-          <ScalarProperty Name="idType" ColumnName="idType" />
-          <ScalarProperty Name="quantity" ColumnName="quantity" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="slideshows">
       <EntityTypeMapping TypeName="ProjectCuoiKiModel.slideshow">
         <MappingFragment StoreEntitySet="slideshow">
@@ -141,6 +123,52 @@
           <ScalarProperty Name="text" ColumnName="text" />
           <ScalarProperty Name="order" ColumnName="order" />
           <ScalarProperty Name="positionId" ColumnName="positionId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Invoices">
+      <EntityTypeMapping TypeName="ProjectCuoiKiModel.Invoice">
+        <MappingFragment StoreEntitySet="Invoice">
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="delivered" ColumnName="delivered" />
+          <ScalarProperty Name="Total" ColumnName="Total" />
+          <ScalarProperty Name="Shippingfee" ColumnName="Shippingfee" />
+          <ScalarProperty Name="DateDelivery" ColumnName="DateDelivery" />
+          <ScalarProperty Name="DateOrder" ColumnName="DateOrder" />
+          <ScalarProperty Name="AddressCustomer" ColumnName="AddressCustomer" />
+          <ScalarProperty Name="PhoneCustomer" ColumnName="PhoneCustomer" />
+          <ScalarProperty Name="EmailCustomer" ColumnName="EmailCustomer" />
+          <ScalarProperty Name="NameCustomer" ColumnName="NameCustomer" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="InvoiceDetails">
+      <EntityTypeMapping TypeName="ProjectCuoiKiModel.InvoiceDetail">
+        <MappingFragment StoreEntitySet="InvoiceDetail">
+          <ScalarProperty Name="total" ColumnName="total" />
+          <ScalarProperty Name="quantity" ColumnName="quantity" />
+          <ScalarProperty Name="price" ColumnName="price" />
+          <ScalarProperty Name="idProduct" ColumnName="idProduct" />
+          <ScalarProperty Name="idInvoice" ColumnName="idInvoice" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="products">
+      <EntityTypeMapping TypeName="ProjectCuoiKiModel.product">
+        <MappingFragment StoreEntitySet="product">
+          <ScalarProperty Name="imgname" ColumnName="imgname" />
+          <ScalarProperty Name="quantity" ColumnName="quantity" />
+          <ScalarProperty Name="idType" ColumnName="idType" />
+          <ScalarProperty Name="price" ColumnName="price" />
+          <ScalarProperty Name="order" ColumnName="order" />
+          <ScalarProperty Name="datebegin" ColumnName="datebegin" />
+          <ScalarProperty Name="hide" ColumnName="hide" />
+          <ScalarProperty Name="meta" ColumnName="meta" />
+          <ScalarProperty Name="link" ColumnName="link" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

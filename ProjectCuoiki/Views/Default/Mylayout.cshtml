@@ -47,7 +47,7 @@
                     <div class="main-menu-wrap">
                         <!-- logo -->
                         <div class="site-logo">
-                            <a href="@Url.Action("Index","Default")">
+                            <a href="@Url.Action("Index", "Default")">
                                 <img src="~/Uploads/img/logo.png" alt="">
                             </a>
                         </div>
@@ -55,11 +55,11 @@
                         <!-- menu start -->
                         <nav class="main-menu">
                             <ul>
-                                <li><a href="@Url.Action("Index","Default")">Trang chủ</a></li>
+                                <li><a href="@Url.Action("Index", "Default")">Trang chủ</a></li>
                                 @{Html.RenderAction("getMenu", "Default");}
                                 <li>
                                     <div class="header-icons">
-                                        <a class="shopping-cart" href="~/gio-hang"><i class="fas fa-shopping-cart"></i></a>
+                                        <a class="shopping-cart" href="~/gio-hang"><i class="fas fa-shopping-cart"></i><sup  style="border-radius: 50%; background-color: #f28123; padding: 2px 4px;color:white" id="quantityOfCart">0 </sup></a>
                                         <a class="mobile-hide search-bar-icon" href="#"><i class="fas fa-search"></i></a>
                                     </div>
                                 </li>

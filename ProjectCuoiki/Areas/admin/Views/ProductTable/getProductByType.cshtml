@@ -35,7 +35,7 @@
             <tr>
                 <td>@i.name</td>
                 <td><img src="~/Uploads/img/products/@i.imgname" style="max-width:100px;object-fit:cover;" /></td>
-                <td>@i.price</td>
+                <td>@i.price.GetValueOrDefault().ToString("#,###", System.Globalization.CultureInfo.GetCultureInfo("vi-VN"))</td>
                 <td>@i.quantity</td>
                 <td>@i.datebegin</td>
                 <td>

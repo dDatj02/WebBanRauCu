@@ -47,7 +47,7 @@
                             <a href="~/@ViewBag.sp/@item.typeproduct.meta/@item.meta"><img src="~/Uploads/img/products/@item.imgname" alt=""></a>
                         </div>
                         <h3>@item.name</h3>
-                        <p class="product-price"><span>Per Kg</span> @item.price </p>
+                        <p class="product-price"><span>Per Kg</span> @item.price.GetValueOrDefault().ToString("#,###", System.Globalization.CultureInfo.GetCultureInfo("vi-VN")) VND </p>
                         <a href="@Url.Action("AddCart", "Cart", new {@idProduct=@item.id})" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
                     </div>
                 </div>
@@ -68,7 +68,7 @@
                             <li><a href="~/@ViewBag.sp/@Model.First().typeproduct.meta?page=@(ViewBag.CurrentPage -1)">Prev</a></li>
 
                         }
-                        @for (int i = 1; i <= ViewBag.NoOfPage; i++)
+                        @for (int i = 1; i <= ViewBag.NoOffPage; i++)
                         {
                             if (i == ViewBag.CurrentPage)
                             {

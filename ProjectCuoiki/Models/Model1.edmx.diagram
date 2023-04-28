@@ -5,19 +5,23 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="f4968347e7c24cfbac3287ae10ae126b" Name="Diagram1">
-        <EntityTypeShape EntityType="ProjectCuoiKiModel.footer" Width="1.5" PointX="5.75" PointY="5.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectCuoiKiModel.imageProduct" Width="1.5" PointX="5.25" PointY="1.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectCuoiKiModel.menu" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectCuoiKiModel.news" Width="1.5" PointX="7.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectCuoiKiModel.positionbanner" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectCuoiKiModel.product" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectCuoiKiModel.slideshow" Width="1.5" PointX="7.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectCuoiKiModel.footer" Width="1.5" PointX="5.25" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectCuoiKiModel.imageProduct" Width="1.5" PointX="5.625" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectCuoiKiModel.menu" Width="1.5" PointX="10" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectCuoiKiModel.news" Width="1.5" PointX="7.625" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectCuoiKiModel.positionbanner" Width="1.5" PointX="0.875" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectCuoiKiModel.slideshow" Width="1.5" PointX="9.875" PointY="8" IsExpanded="true" />
         <EntityTypeShape EntityType="ProjectCuoiKiModel.sysdiagram" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ProjectCuoiKiModel.typeproduct" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectCuoiKiModel.banner" Width="1.5" PointX="3" PointY="6" IsExpanded="true" />
-        <AssociationConnector Association="ProjectCuoiKiModel.FK_imageProduct_product" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ProjectCuoiKiModel.banner" Width="1.5" PointX="2.625" PointY="10.25" IsExpanded="true" />
         <AssociationConnector Association="ProjectCuoiKiModel.FK_banner_positionbanner" ManuallyRouted="false" />
-        <AssociationConnector Association="ProjectCuoiKiModel.FK_product_typeproduct" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ProjectCuoiKiModel.Invoice" Width="1.5" PointX="4.625" PointY="5.875" />
+        <EntityTypeShape EntityType="ProjectCuoiKiModel.InvoiceDetail" Width="1.5" PointX="0.625" PointY="6" IsExpanded="true" />
+        <AssociationConnector Association="ProjectCuoiKiModel.FK_InvoiceDetail_Invoice" />
+        <EntityTypeShape EntityType="ProjectCuoiKiModel.product" Width="1.5" PointX="3" PointY="0.875" />
+        <AssociationConnector Association="ProjectCuoiKiModel.FK_imageProduct_product" />
+        <AssociationConnector Association="ProjectCuoiKiModel.FK_InvoiceDetail_product" />
+        <AssociationConnector Association="ProjectCuoiKiModel.FK_product_typeproduct" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

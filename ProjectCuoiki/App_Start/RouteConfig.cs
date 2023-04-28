@@ -37,6 +37,14 @@ namespace ProjectCuoiki
            },
                new[] { "ProjectCuoiKi.Controllers" }
              );
+            routes.MapRoute("CheckOut", "{check}",
+              new { controller = "Cart", action = "CheckOut" },
+                 new RouteValueDictionary
+           {
+                    {"check","dat-hang"}
+           },
+               new[] { "ProjectCuoiKi.Controllers" }
+             );
             routes.MapRoute("Contact", "{Contact}",
               new { controller = "Contact", action = "Index" },
                  new RouteValueDictionary

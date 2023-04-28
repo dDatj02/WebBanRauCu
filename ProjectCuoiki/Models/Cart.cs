@@ -12,9 +12,9 @@ namespace ProjectCuoiki.Models
         public int idProduct { get; set; }
         public string nameProduct { get; set; }
         public string imgProduct { get; set; }
-        public int price { get; set; }
+        public decimal price { get; set; }
         public int quantity { get; set; }
-        public int total { get { return price * quantity; } }
+        public decimal total { get { return (price * quantity); } }
 
         public Cart(int idProduct)
         {
@@ -23,7 +23,7 @@ namespace ProjectCuoiki.Models
             product p=db.products.Single(i=>i.id == idProduct);
             this.nameProduct = p.name;
             this.imgProduct = p.imgname;
-            this.price = p.price;
+            this.price = (decimal)p.price;
             this.quantity = 1;
         }
     }

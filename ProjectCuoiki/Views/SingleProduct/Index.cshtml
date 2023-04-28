@@ -30,13 +30,16 @@
             <div class="col-md-7">
                 <div class="single-product-content">
                     <h3>@Model.name</h3>
-                    <p class="single-product-pricing"><span>Per Kg</span> $@Model.price</p>
+                    <p class="single-product-pricing"><span>Per Kg</span> $@Model.price.GetValueOrDefault().ToString("#,###", System.Globalization.CultureInfo.GetCultureInfo("vi-VN")) VND</p>
                     <p>@Html.Raw(Model.description)</p>
                     <div class="single-product-form">
-                        <form action="index.html">
-                            <input type="number" placeholder="0">
+                        <form action="@Url.Action("AddCart","Cart")" method="post">
+                            <input type="number" placeholder="1" id="quantity" min="1" value="1" name="quantity">
+                            <input hidden value="@Model.id" name="idProduct" />
+                            <button type="submit" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
                         </form>
-                        <a href="@Url.Action("AddCart", "Cart", new {idProduct=Model.id})" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+                        <a type="submit" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+
                         <p><strong>Categories: </strong>Fruits, Organic</p>
                     </div>
                     <h4>Share:</h4>
@@ -69,3 +72,19 @@
     </div>
 </div>
 <!-- end more products -->
+@*<script>
+    function addcart(idProduct) {
+        quantity = $("#quantity").val()
+        $.ajax({
+            url: '"@Url.Action("AddCart", "Cart")',
+            type: 'get',
+            data: { idProduct: idProduct, quantity: quantity },
+            success: function (data) {
+                alert("Đã thêm vào giỏ hàng")
+            },
+            error: function (data) {
+                alert("Lỗi")
+            }
+            })
+    }
+</script>*@

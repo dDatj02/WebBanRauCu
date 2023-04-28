@@ -1,0 +1,115 @@
+﻿@model IEnumerable<ProjectCuoiki.Models.Cart>
+
+
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-12">
+                <div class="cart-table-wrap">
+                    @if (Model != null) { 
+                    <table class="cart-table">
+                        <thead class="cart-table-head">
+                            <tr class="table-head-row">
+                                <th class="product-remove"></th>
+                                <th class="product-image">Hình ảnh</th>
+                                <th class="product-name">Tên</th>
+                                <th class="product-price">Giá</th>
+                                <th class="product-quantity">Số lượng</th>
+                                <th class="product-total">Thành tiền</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var i in Model)
+                            {
+                                <tr class="table-body-row">
+                                    <td class="product-remove"><a onclick="removeCart(@i.idProduct)" ><i class="far fa-window-close"></i></a></td>
+                                    <td class="product-image"><img src="~/Uploads/img/products/@i.imgProduct" alt=""></td>
+                                    <td class="product-name">@i.nameProduct</td>
+                                    <td class="product-price">$@i.price.ToString("#,###", System.Globalization.CultureInfo.GetCultureInfo("vi-VN"))</td>
+                                    <td class="product-quantity"><input type="number" min="1" placeholder="@i.quantity" value="@i.quantity" onchange="ChangeQuantity(@i.idProduct,this.value)"></td>
+                                    <td class="product-total">@i.total.ToString("#,###", System.Globalization.CultureInfo.GetCultureInfo("vi-VN"))</td>
+                                </tr>
+                            }
+
+
+                        </tbody>
+                    </table>
+                    }
+else
+            {
+                <p>Giỏ hàng trống</p>
+            }
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="total-section">
+                    <table class="total-table">
+                        <thead class="total-table-head">
+                            <tr class="table-total-row">
+                                <th>Tổng</th>
+                                <th>Giá</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="total-data">
+                                <td><strong>Tiền hàng: </strong></td>
+                                <td>$ @ViewBag.subTotal.ToString("#,###", System.Globalization.CultureInfo.GetCultureInfo("vi-VN"))</td>
+                            </tr>
+                            <tr class="total-data">
+                                <td><strong>Phí giao hàng: </strong></td>
+                                <td>$ @ViewBag.shipping.ToString("#,###", System.Globalization.CultureInfo.GetCultureInfo("vi-VN"))</td>
+                            </tr>
+                            <tr class="total-data">
+                                <td><strong>Tổng tiền: </strong></td>
+                                <td>$ @ViewBag.total.ToString("#,###", System.Globalization.CultureInfo.GetCultureInfo("vi-VN"))</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="cart-buttons">
+                        <a href="@Url.Action("Index","Default")#product-section" class="boxed-btn">Tiếp tục mua</a>
+                        <a href="~/dat-hang" class="boxed-btn black">Đặt hàng</a>
+                    </div>
+                </div>
+
+                <div class="coupon-section">
+                    <h3>Apply Coupon</h3>
+                    <div class="coupon-form-wrap">
+                        <form action="index.html">
+                            <p><input type="text" placeholder="Coupon"></p>
+                            <p><input type="submit" value="Apply"></p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+    function removeCart(id){
+        $.ajax({
+            url: '@Url.Action("RemoveCart","Cart")',
+            type: 'Get',
+            data: { idProduct: id},
+            success: function (data) {
+                $("#getCart").html(data)
+            },
+            error: function (error) {
+                alert("Something went wrong")
+            }
+        });
+    }
+        function ChangeQuantity(id, quantity){
+        $.ajax({
+            url: '@Url.Action("ChangeQuantity","Cart")',
+            type: 'Get',
+            data: { idProduct: id, quantity:quantity},
+            success: function (data) {
+                $("#getCart").html(data)
+            },
+            error: function (error) {
+                alert("Something went wrong")
+            }
+        });
+    }
+    </script>
