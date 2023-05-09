@@ -29,6 +29,16 @@ namespace ProjectCuoiki
              },
                  new[] { "ProjectCuoiKi.Controllers" }
                );
+
+            routes.MapRoute("ProductSearch", "{type}",
+             new { controller = "Product", action = "Search" },
+                new RouteValueDictionary
+          {
+                    {"type","tim-kiem"}
+          },
+              new[] { "ProjectCuoiKi.Controllers" }
+            );
+
             routes.MapRoute("Cart", "{cart}",
               new { controller = "Cart", action = "Index" },
                  new RouteValueDictionary

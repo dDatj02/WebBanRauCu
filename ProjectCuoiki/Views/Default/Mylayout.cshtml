@@ -18,6 +18,8 @@
     <link rel="stylesheet" href="~/Content/css/all.min.css">
     <!-- bootstrap -->
     <link rel="stylesheet" href="~/Content/bootstrap/css/bootstrap.min.css">
+    <!-- jquery ui -->
+    <link href="~/Content/css/jquery-ui.css" rel="stylesheet" />
     <!-- owl carousel -->
     <link rel="stylesheet" href="~/Content/css/owl.carousel.css">
     <!-- magnific popup -->
@@ -30,6 +32,8 @@
     <link rel="stylesheet" href="~/Content/css/main.css">
     <!-- responsive -->
     <link rel="stylesheet" href="~/Content/css/responsive.css">
+
+
 </head>
 <body>
     <!--PreLoader-->
@@ -57,16 +61,43 @@
                             <ul>
                                 <li><a href="@Url.Action("Index", "Default")">Trang chủ</a></li>
                                 @{Html.RenderAction("getMenu", "Default");}
-                                <li>
+
+                                <li style="float: right">
                                     <div class="header-icons">
-                                        <a class="shopping-cart" href="~/gio-hang"><i class="fas fa-shopping-cart"></i><sup  style="border-radius: 50%; background-color: #f28123; padding: 2px 4px;color:white" id="quantityOfCart">0 </sup></a>
-                                        <a class="mobile-hide search-bar-icon" href="#"><i class="fas fa-search"></i></a>
+                                        <div>
+                                            <a href="">@HttpContext.Current.User.Identity.Name</a>
+                                            <ul class="sub-menu">
+                                                <li><a href="@Url.Action("Index", "OrderHistory", new { name =  @HttpContext.Current.User.Identity.Name})">Order History</a></li>
+                                                @using (Html.BeginForm("Logout", "Login", FormMethod.Post))
+                                                {
+                                                    <li>
+                                                        <a href="javascript:;" onclick="document.forms[0].submit();">Logout</a>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        </div>
                                     </div>
                                 </li>
+
+                                <li>
+                                    <form action="/tim-kiem" method="get">
+                                        <div class="input-group">
+                                            <div class="form-outline">
+                                                <input type="text" id="txtKeyword" class="form-control" name="keyword" placeholder="Tim kiem" }">
+                                            </div>
+                                            <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
+                                        </div>
+                                    </form>
+                                </li>
+
+                                <li>
+                                    <div class="header-icons">
+                                        <a class="shopping-cart" href="~/gio-hang"><i class="fas fa-shopping-cart"></i></a>
+                                    </div>
+                                </li>
+
                             </ul>
                         </nav>
-                        <a class="mobile-show search-bar-icon" href="#"><i class="fas fa-search"></i></a>
-                        <div class="mobile-menu"></div>
                         <!-- menu end -->
                     </div>
                 </div>
@@ -74,7 +105,26 @@
         </div>
     </div>
     <!-- end header -->
-
+    <!-- Search Area -->
+    <div class="search-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <span class="close-btn"><i class="fas fa-window-close"></i></span>
+                    <div class="search-bar">
+                        <div class="search-bar-tablecell">
+                            <h3>Search For:</h3>
+                            <form action="/tim-kiem" method="get">
+                                <input type="text" id="txtKeyword" name="keyword" placeholder="Tim kiem" }">
+                                <button type="submit">Search <i class="fas fa-search"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end Search Area -->
 
     @RenderBody()
 
@@ -110,6 +160,8 @@
 <script src="~/Scripts/js/jquery-1.11.3.min.js"></script>
 <!-- bootstrap -->
 <script src="~/Content/bootstrap/js/bootstrap.min.js"></script>
+<!-- jquery ui -->
+<script src="~/Scripts/js/jquery-ui.js"></script>
 <!-- count down -->
 <script src="~/Scripts/js/jquery.countdown.js"></script>
 <!-- isotope -->
@@ -126,4 +178,6 @@
 <script src="~/Scripts/js/sticker.js"></script>
 <!-- main js -->
 <script src="~/Scripts/js/main.js"></script>
+<!-- base controller js -->
+<script src="~/Scripts/js/baseController.js"></script>
 </html>

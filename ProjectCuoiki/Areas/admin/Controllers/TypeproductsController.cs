@@ -12,6 +12,7 @@ using EntityState = System.Data.Entity.EntityState;
 
 namespace ProjectCuoiki.Areas.admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class TypeproductsController : Controller
     {
         private ProjectCuoiKiEntities db = new ProjectCuoiKiEntities();

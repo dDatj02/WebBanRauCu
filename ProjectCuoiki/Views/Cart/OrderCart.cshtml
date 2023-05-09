@@ -4,5 +4,21 @@
     Layout = "~/Views/Default/Mylayout.cshtml";
 }
 
-<h2>Đặt hàng thành công</h2>
 
+<div style="position:relative ;height:100vh; width:100vw">
+    <div style="width:fit-content; height:fit-content; position:absolute; top:40%; left:50%; transform:translateX(-50%)">
+        <h1>Đặt hàng thành công</h1>
+        <a 
+           style="padding:10px 30px; border-radius: 20px; background-color:aqua; color:white"
+           href="@Url.RouteUrl(new { action = "Index", controller = "Default" })">
+            
+           Trở về trang chủ
+        </a>
+    </div>
+</div>
+
+<script>
+    function backToHomePage() {
+        return URL.
+    }
+</script>

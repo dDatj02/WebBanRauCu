@@ -1,0 +1,49 @@
+﻿@model List<ProjectCuoiki.Models.productSearchModel>
+@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Default/Mylayout.cshtml";
+}
+
+<!-- breadcrumb-section -->
+
+<div class="breadcrumb-section breadcrumb-bg" style=" background-image: url(../../Uploads/img/abt.jpg);">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 text-center">
+                <div class="breadcrumb-text">
+                    <p>Fresh and Organic</p>
+                    <h1>Shop</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end breadcrumb section -->
+<!-- products -->
+<div class="product-section mt-150 mb-150">
+    <div class="container">
+
+        <div class="row">
+            <h2>Danh sach tim kiem cho tu khoa: @ViewBag.Keyword</h2>
+        </div>
+
+        <div class="row product-lists">
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-4 col-md-6 text-center">
+                    <div class="single-product-item">
+                        <div class="product-image">
+                            <a href="~/@ViewBag.sp/@item.typeProductMeta/@item.meta"><img src="~/Uploads/img/products/@item.imgname" alt=""></a>
+                        </div>
+                        <h3>@item.name</h3>
+                        <p class="product-price"><span>Per Kg</span> @item.price.GetValueOrDefault().ToString("#,###", System.Globalization.CultureInfo.GetCultureInfo("vi-VN")) VND </p>
+                        <a href="@Url.Action("AddCart", "Cart", new {@idProduct=@item.id})" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+                    </div>
+                </div>
+            }
+
+        </div>
+        
+    </div>
+    <!-- end products -->
+

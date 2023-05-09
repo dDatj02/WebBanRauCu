@@ -4,9 +4,9 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="ProjectCuoiKiModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="ProjectCuoiKiModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <!--Errors Found During Generation:
-warning 6002: The table/view 'ProjectCuoiKi.dbo.banner' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'ProjectCuoiKiNew.dbo.banner' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="banner">
           <Key>
             <PropertyRef Name="id" />
@@ -145,16 +145,6 @@ warning 6002: The table/view 'ProjectCuoiKi.dbo.banner' does not have a primary 
           <Property Name="text" Type="ntext" />
           <Property Name="title" Type="ntext" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
-        </EntityType>
         <EntityType Name="typeproduct">
           <Key>
             <PropertyRef Name="id" />
@@ -166,6 +156,24 @@ warning 6002: The table/view 'ProjectCuoiKi.dbo.banner' does not have a primary 
           <Property Name="datebegin" Type="smalldatetime" />
           <Property Name="order" Type="int" />
           <Property Name="hide" Type="bit" />
+        </EntityType>
+        <EntityType Name="userAccount">
+          <Key>
+            <PropertyRef Name="userID" />
+          </Key>
+          <Property Name="userID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="passWord" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="repassWord" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="rememberMe" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="userRole">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userID" Type="int" Nullable="false" />
+          <Property Name="role" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <Association Name="FK_banner_positionbanner">
           <End Role="positionbanner" Type="Self.positionbanner" Multiplicity="0..1" />
@@ -227,6 +235,22 @@ warning 6002: The table/view 'ProjectCuoiKi.dbo.banner' does not have a primary 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_userRole_userAccount">
+          <End Role="userAccount" Type="Self.userAccount" Multiplicity="1" />
+          <End Role="userRole" Type="Self.userRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="userAccount">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="userRole">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="Sp_Account_Login" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userName" Type="varchar(max)" Mode="In" />
+          <Parameter Name="passWord" Type="varchar(max)" Mode="In" />
+        </Function>
         <EntityContainer Name="ProjectCuoiKiModelStoreContainer">
           <EntitySet Name="footer" EntityType="Self.footer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="imageProduct" EntityType="Self.imageProduct" Schema="dbo" store:Type="Tables" />
@@ -237,21 +261,22 @@ warning 6002: The table/view 'ProjectCuoiKi.dbo.banner' does not have a primary 
           <EntitySet Name="positionbanner" EntityType="Self.positionbanner" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="product" EntityType="Self.product" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="slideshow" EntityType="Self.slideshow" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="typeproduct" EntityType="Self.typeproduct" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="userAccount" EntityType="Self.userAccount" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="userRole" EntityType="Self.userRole" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="banner" EntityType="Self.banner" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
-[banner].[id] AS [id], 
-[banner].[name] AS [name], 
-[banner].[link] AS [link], 
-[banner].[img] AS [img], 
-[banner].[meta] AS [meta], 
-[banner].[hide] AS [hide], 
-[banner].[datebegin] AS [datebegin], 
-[banner].[text] AS [text], 
-[banner].[order] AS [order], 
-[banner].[positionId] AS [positionId]
-FROM [dbo].[banner] AS [banner]</DefiningQuery>
+    [banner].[id] AS [id], 
+    [banner].[name] AS [name], 
+    [banner].[link] AS [link], 
+    [banner].[img] AS [img], 
+    [banner].[meta] AS [meta], 
+    [banner].[hide] AS [hide], 
+    [banner].[datebegin] AS [datebegin], 
+    [banner].[text] AS [text], 
+    [banner].[order] AS [order], 
+    [banner].[positionId] AS [positionId]
+    FROM [dbo].[banner] AS [banner]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_banner_positionbanner" Association="Self.FK_banner_positionbanner">
             <End Role="positionbanner" EntitySet="positionbanner" />
@@ -273,8 +298,13 @@ FROM [dbo].[banner] AS [banner]</DefiningQuery>
             <End Role="typeproduct" EntitySet="typeproduct" />
             <End Role="product" EntitySet="product" />
           </AssociationSet>
+          <AssociationSet Name="FK_userRole_userAccount" Association="Self.FK_userRole_userAccount">
+            <End Role="userAccount" EntitySet="userAccount" />
+            <End Role="userRole" EntitySet="userRole" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ProjectCuoiKiModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -305,7 +335,37 @@ FROM [dbo].[banner] AS [banner]</DefiningQuery>
           <Property Name="order" Type="Int32" />
           <Property Name="img" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="idproduct" Type="Int32" />
-          <NavigationProperty Name="product" Relationship="ProjectCuoiKiModel.FK_imageProduct_product" FromRole="imageProduct" ToRole="product" />
+          <NavigationProperty Name="product" Relationship="Self.FK_imageProduct_product" FromRole="imageProduct" ToRole="product" />
+        </EntityType>
+        <EntityType Name="Invoice">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NameCustomer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EmailCustomer" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneCustomer" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="AddressCustomer" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="DateOrder" Type="DateTime" Precision="3" />
+          <Property Name="DateDelivery" Type="DateTime" Precision="3" />
+          <Property Name="Shippingfee" Type="Decimal" Precision="10" Scale="4" />
+          <Property Name="Total" Type="Decimal" Precision="10" Scale="4" />
+          <Property Name="delivered" Type="Boolean" />
+          <Property Name="status" Type="Boolean" />
+          <NavigationProperty Name="InvoiceDetails" Relationship="Self.FK_InvoiceDetail_Invoice" FromRole="Invoice" ToRole="InvoiceDetail" />
+        </EntityType>
+        <EntityType Name="InvoiceDetail">
+          <Key>
+            <PropertyRef Name="idInvoice" />
+            <PropertyRef Name="idProduct" />
+          </Key>
+          <Property Name="idInvoice" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="idProduct" Type="Int32" Nullable="false" />
+          <Property Name="price" Type="Decimal" Precision="10" Scale="4" />
+          <Property Name="quantity" Type="Int32" />
+          <Property Name="total" Type="Decimal" Precision="10" Scale="4" />
+          <NavigationProperty Name="Invoice" Relationship="Self.FK_InvoiceDetail_Invoice" FromRole="InvoiceDetail" ToRole="Invoice" />
+          <NavigationProperty Name="product" Relationship="Self.FK_InvoiceDetail_product" FromRole="InvoiceDetail" ToRole="product" />
         </EntityType>
         <EntityType Name="menu">
           <Key>
@@ -344,6 +404,26 @@ FROM [dbo].[banner] AS [banner]</DefiningQuery>
           <Property Name="position" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
           <NavigationProperty Name="banners" Relationship="Self.FK_banner_positionbanner" FromRole="positionbanner" ToRole="banner" />
         </EntityType>
+        <EntityType Name="product">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="link" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="meta" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="hide" Type="Boolean" />
+          <Property Name="datebegin" Type="DateTime" Precision="0" />
+          <Property Name="order" Type="Int32" />
+          <Property Name="price" Type="Decimal" Precision="10" Scale="4" />
+          <Property Name="idType" Type="Int32" />
+          <Property Name="quantity" Type="Int32" />
+          <Property Name="imgname" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="imageProducts" Relationship="Self.FK_imageProduct_product" FromRole="product" ToRole="imageProduct" />
+          <NavigationProperty Name="InvoiceDetails" Relationship="Self.FK_InvoiceDetail_product" FromRole="product" ToRole="InvoiceDetail" />
+          <NavigationProperty Name="typeproduct" Relationship="Self.FK_product_typeproduct" FromRole="product" ToRole="typeproduct" />
+        </EntityType>
         <EntityType Name="slideshow">
           <Key>
             <PropertyRef Name="id" />
@@ -359,16 +439,6 @@ FROM [dbo].[banner] AS [banner]</DefiningQuery>
           <Property Name="text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="sysdiagram">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
         <EntityType Name="typeproduct">
           <Key>
             <PropertyRef Name="id" />
@@ -380,7 +450,27 @@ FROM [dbo].[banner] AS [banner]</DefiningQuery>
           <Property Name="datebegin" Type="DateTime" Precision="0" />
           <Property Name="order" Type="Int32" />
           <Property Name="hide" Type="Boolean" />
-          <NavigationProperty Name="products" Relationship="ProjectCuoiKiModel.FK_product_typeproduct" FromRole="typeproduct" ToRole="product" />
+          <NavigationProperty Name="products" Relationship="Self.FK_product_typeproduct" FromRole="typeproduct" ToRole="product" />
+        </EntityType>
+        <EntityType Name="userAccount">
+          <Key>
+            <PropertyRef Name="userID" />
+          </Key>
+          <Property Name="userID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="passWord" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="repassWord" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="rememberMe" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="userRoles" Relationship="Self.FK_userRole_userAccount" FromRole="userAccount" ToRole="userRole" />
+        </EntityType>
+        <EntityType Name="userRole">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userID" Type="Int32" Nullable="false" />
+          <Property Name="role" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="userAccount" Relationship="Self.FK_userRole_userAccount" FromRole="userRole" ToRole="userAccount" />
         </EntityType>
         <EntityType Name="banner">
           <Key>
@@ -398,6 +488,42 @@ FROM [dbo].[banner] AS [banner]</DefiningQuery>
           <Property Name="positionId" Type="Int32" />
           <NavigationProperty Name="positionbanner" Relationship="Self.FK_banner_positionbanner" FromRole="banner" ToRole="positionbanner" />
         </EntityType>
+        <Association Name="FK_imageProduct_product">
+          <End Role="product" Type="Self.product" Multiplicity="0..1" />
+          <End Role="imageProduct" Type="Self.imageProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="imageProduct">
+              <PropertyRef Name="idproduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InvoiceDetail_Invoice">
+          <End Role="Invoice" Type="Self.Invoice" Multiplicity="1" />
+          <End Role="InvoiceDetail" Type="Self.InvoiceDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Invoice">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="InvoiceDetail">
+              <PropertyRef Name="idInvoice" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InvoiceDetail_product">
+          <End Role="product" Type="Self.product" Multiplicity="1" />
+          <End Role="InvoiceDetail" Type="Self.InvoiceDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="InvoiceDetail">
+              <PropertyRef Name="idProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_banner_positionbanner">
           <End Role="positionbanner" Type="Self.positionbanner" Multiplicity="0..1" />
           <End Role="banner" Type="Self.banner" Multiplicity="*" />
@@ -410,129 +536,9 @@ FROM [dbo].[banner] AS [banner]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="ProjectCuoiKiEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="footers" EntityType="Self.footer" />
-          <EntitySet Name="imageProducts" EntityType="Self.imageProduct" />
-          <EntitySet Name="menus" EntityType="Self.menu" />
-          <EntitySet Name="news" EntityType="Self.news" />
-          <EntitySet Name="positionbanners" EntityType="Self.positionbanner" />
-          <EntitySet Name="slideshows" EntityType="Self.slideshow" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
-          <EntitySet Name="typeproducts" EntityType="Self.typeproduct" />
-          <EntitySet Name="banners" EntityType="Self.banner" />
-          <AssociationSet Name="FK_banner_positionbanner" Association="Self.FK_banner_positionbanner">
-            <End Role="positionbanner" EntitySet="positionbanners" />
-            <End Role="banner" EntitySet="banners" />
-          </AssociationSet>
-          <EntitySet Name="Invoices" EntityType="ProjectCuoiKiModel.Invoice" />
-          <EntitySet Name="InvoiceDetails" EntityType="ProjectCuoiKiModel.InvoiceDetail" />
-          <AssociationSet Name="FK_InvoiceDetail_Invoice" Association="ProjectCuoiKiModel.FK_InvoiceDetail_Invoice">
-            <End Role="Invoice" EntitySet="Invoices" />
-            <End Role="InvoiceDetail" EntitySet="InvoiceDetails" />
-          </AssociationSet>
-          <EntitySet Name="products" EntityType="ProjectCuoiKiModel.product" />
-          <AssociationSet Name="FK_imageProduct_product" Association="ProjectCuoiKiModel.FK_imageProduct_product">
-            <End Role="product" EntitySet="products" />
-            <End Role="imageProduct" EntitySet="imageProducts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_InvoiceDetail_product" Association="ProjectCuoiKiModel.FK_InvoiceDetail_product">
-            <End Role="product" EntitySet="products" />
-            <End Role="InvoiceDetail" EntitySet="InvoiceDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_product_typeproduct" Association="ProjectCuoiKiModel.FK_product_typeproduct">
-            <End Role="typeproduct" EntitySet="typeproducts" />
-            <End Role="product" EntitySet="products" />
-          </AssociationSet>
-          </EntityContainer>
-        <EntityType Name="Invoice">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="NameCustomer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="EmailCustomer" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="PhoneCustomer" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="AddressCustomer" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="DateOrder" Type="DateTime" Precision="3" />
-          <Property Name="DateDelivery" Type="DateTime" Precision="3" />
-          <Property Name="Shippingfee" Type="Decimal" Precision="10" Scale="4" />
-          <Property Name="Total" Type="Decimal" Precision="10" Scale="4" />
-          <Property Name="delivered" Type="Boolean" />
-          <Property Name="status" Type="Boolean" />
-          <NavigationProperty Name="InvoiceDetails" Relationship="ProjectCuoiKiModel.FK_InvoiceDetail_Invoice" FromRole="Invoice" ToRole="InvoiceDetail" />
-        </EntityType>
-        <EntityType Name="InvoiceDetail">
-          <Key>
-            <PropertyRef Name="idInvoice" />
-            <PropertyRef Name="idProduct" />
-          </Key>
-          <Property Name="idInvoice" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="idProduct" Type="Int32" Nullable="false" />
-          <Property Name="price" Type="Decimal" Precision="10" Scale="4" />
-          <Property Name="quantity" Type="Int32" />
-          <Property Name="total" Type="Decimal" Precision="10" Scale="4" />
-          <NavigationProperty Name="Invoice" Relationship="ProjectCuoiKiModel.FK_InvoiceDetail_Invoice" FromRole="InvoiceDetail" ToRole="Invoice" />
-          <NavigationProperty Name="product" Relationship="ProjectCuoiKiModel.FK_InvoiceDetail_product" FromRole="InvoiceDetail" ToRole="product" />
-        </EntityType>
-        <Association Name="FK_InvoiceDetail_Invoice">
-          <End Type="ProjectCuoiKiModel.Invoice" Role="Invoice" Multiplicity="1" />
-          <End Type="ProjectCuoiKiModel.InvoiceDetail" Role="InvoiceDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Invoice">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="InvoiceDetail">
-              <PropertyRef Name="idInvoice" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="product">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="link" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="meta" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="hide" Type="Boolean" />
-          <Property Name="datebegin" Type="DateTime" Precision="0" />
-          <Property Name="order" Type="Int32" />
-          <Property Name="price" Type="Decimal" Precision="10" Scale="4" />
-          <Property Name="idType" Type="Int32" />
-          <Property Name="quantity" Type="Int32" />
-          <Property Name="imgname" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="imageProducts" Relationship="ProjectCuoiKiModel.FK_imageProduct_product" FromRole="product" ToRole="imageProduct" />
-          <NavigationProperty Name="InvoiceDetails" Relationship="ProjectCuoiKiModel.FK_InvoiceDetail_product" FromRole="product" ToRole="InvoiceDetail" />
-          <NavigationProperty Name="typeproduct" Relationship="ProjectCuoiKiModel.FK_product_typeproduct" FromRole="product" ToRole="typeproduct" />
-        </EntityType>
-        <Association Name="FK_imageProduct_product">
-          <End Type="ProjectCuoiKiModel.product" Role="product" Multiplicity="0..1" />
-          <End Type="ProjectCuoiKiModel.imageProduct" Role="imageProduct" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="product">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="imageProduct">
-              <PropertyRef Name="idproduct" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_InvoiceDetail_product">
-          <End Type="ProjectCuoiKiModel.product" Role="product" Multiplicity="1" />
-          <End Type="ProjectCuoiKiModel.InvoiceDetail" Role="InvoiceDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="product">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="InvoiceDetail">
-              <PropertyRef Name="idProduct" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_product_typeproduct">
-          <End Type="ProjectCuoiKiModel.typeproduct" Role="typeproduct" Multiplicity="0..1" />
-          <End Type="ProjectCuoiKiModel.product" Role="product" Multiplicity="*" />
+          <End Role="typeproduct" Type="Self.typeproduct" Multiplicity="0..1" />
+          <End Role="product" Type="Self.product" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="typeproduct">
               <PropertyRef Name="id" />
@@ -542,7 +548,66 @@ FROM [dbo].[banner] AS [banner]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        </Schema>
+        <Association Name="FK_userRole_userAccount">
+          <End Role="userAccount" Type="Self.userAccount" Multiplicity="1" />
+          <End Role="userRole" Type="Self.userRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="userAccount">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="userRole">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ProjectCuoiKiEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="footers" EntityType="Self.footer" />
+          <EntitySet Name="imageProducts" EntityType="Self.imageProduct" />
+          <EntitySet Name="Invoices" EntityType="Self.Invoice" />
+          <EntitySet Name="InvoiceDetails" EntityType="Self.InvoiceDetail" />
+          <EntitySet Name="menus" EntityType="Self.menu" />
+          <EntitySet Name="news" EntityType="Self.news" />
+          <EntitySet Name="positionbanners" EntityType="Self.positionbanner" />
+          <EntitySet Name="products" EntityType="Self.product" />
+          <EntitySet Name="slideshows" EntityType="Self.slideshow" />
+          <EntitySet Name="typeproducts" EntityType="Self.typeproduct" />
+          <EntitySet Name="userAccounts" EntityType="Self.userAccount" />
+          <EntitySet Name="userRoles" EntityType="Self.userRole" />
+          <EntitySet Name="banners" EntityType="Self.banner" />
+          <AssociationSet Name="FK_imageProduct_product" Association="Self.FK_imageProduct_product">
+            <End Role="product" EntitySet="products" />
+            <End Role="imageProduct" EntitySet="imageProducts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InvoiceDetail_Invoice" Association="Self.FK_InvoiceDetail_Invoice">
+            <End Role="Invoice" EntitySet="Invoices" />
+            <End Role="InvoiceDetail" EntitySet="InvoiceDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InvoiceDetail_product" Association="Self.FK_InvoiceDetail_product">
+            <End Role="product" EntitySet="products" />
+            <End Role="InvoiceDetail" EntitySet="InvoiceDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_banner_positionbanner" Association="Self.FK_banner_positionbanner">
+            <End Role="positionbanner" EntitySet="positionbanners" />
+            <End Role="banner" EntitySet="banners" />
+          </AssociationSet>
+          <AssociationSet Name="FK_product_typeproduct" Association="Self.FK_product_typeproduct">
+            <End Role="typeproduct" EntitySet="typeproducts" />
+            <End Role="product" EntitySet="products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_userRole_userAccount" Association="Self.FK_userRole_userAccount">
+            <End Role="userAccount" EntitySet="userAccounts" />
+            <End Role="userRole" EntitySet="userRoles" />
+          </AssociationSet>
+          <FunctionImport Name="Sp_Account_Login" ReturnType="Collection(Int32)">
+            <Parameter Name="userName" Mode="In" Type="String" />
+            <Parameter Name="passWord" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="userValid" ReturnType="Collection(Int32)">
+            <Parameter Name="userName" Mode="In" Type="String" />
+            <Parameter Name="passWord" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+      </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -578,6 +643,34 @@ FROM [dbo].[banner] AS [banner]</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Invoices">
+            <EntityTypeMapping TypeName="ProjectCuoiKiModel.Invoice">
+              <MappingFragment StoreEntitySet="Invoice">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="NameCustomer" ColumnName="NameCustomer" />
+                <ScalarProperty Name="EmailCustomer" ColumnName="EmailCustomer" />
+                <ScalarProperty Name="PhoneCustomer" ColumnName="PhoneCustomer" />
+                <ScalarProperty Name="AddressCustomer" ColumnName="AddressCustomer" />
+                <ScalarProperty Name="DateOrder" ColumnName="DateOrder" />
+                <ScalarProperty Name="DateDelivery" ColumnName="DateDelivery" />
+                <ScalarProperty Name="Shippingfee" ColumnName="Shippingfee" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="delivered" ColumnName="delivered" />
+                <ScalarProperty Name="status" ColumnName="status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InvoiceDetails">
+            <EntityTypeMapping TypeName="ProjectCuoiKiModel.InvoiceDetail">
+              <MappingFragment StoreEntitySet="InvoiceDetail">
+                <ScalarProperty Name="idInvoice" ColumnName="idInvoice" />
+                <ScalarProperty Name="idProduct" ColumnName="idProduct" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="total" ColumnName="total" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="menus">
             <EntityTypeMapping TypeName="ProjectCuoiKiModel.menu">
               <MappingFragment StoreEntitySet="menu">
@@ -594,7 +687,6 @@ FROM [dbo].[banner] AS [banner]</DefiningQuery>
           <EntitySetMapping Name="news">
             <EntityTypeMapping TypeName="ProjectCuoiKiModel.news">
               <MappingFragment StoreEntitySet="news">
-                <ScalarProperty Name="order" ColumnName="order" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="title" ColumnName="title" />
                 <ScalarProperty Name="datebegin" ColumnName="datebegin" />
@@ -606,6 +698,7 @@ FROM [dbo].[banner] AS [banner]</DefiningQuery>
                 <ScalarProperty Name="img" ColumnName="img" />
                 <ScalarProperty Name="content" ColumnName="content" />
                 <ScalarProperty Name="author" ColumnName="author" />
+                <ScalarProperty Name="order" ColumnName="order" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -617,10 +710,27 @@ FROM [dbo].[banner] AS [banner]</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="products">
+            <EntityTypeMapping TypeName="ProjectCuoiKiModel.product">
+              <MappingFragment StoreEntitySet="product">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="link" ColumnName="link" />
+                <ScalarProperty Name="meta" ColumnName="meta" />
+                <ScalarProperty Name="hide" ColumnName="hide" />
+                <ScalarProperty Name="datebegin" ColumnName="datebegin" />
+                <ScalarProperty Name="order" ColumnName="order" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="idType" ColumnName="idType" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="imgname" ColumnName="imgname" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="slideshows">
             <EntityTypeMapping TypeName="ProjectCuoiKiModel.slideshow">
               <MappingFragment StoreEntitySet="slideshow">
-                <ScalarProperty Name="title" ColumnName="title" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="img" ColumnName="img" />
@@ -630,17 +740,7 @@ FROM [dbo].[banner] AS [banner]</DefiningQuery>
                 <ScalarProperty Name="hide" ColumnName="hide" />
                 <ScalarProperty Name="datebegin" ColumnName="datebegin" />
                 <ScalarProperty Name="text" ColumnName="text" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="ProjectCuoiKiModel.sysdiagram">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="title" ColumnName="title" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -654,6 +754,26 @@ FROM [dbo].[banner] AS [banner]</DefiningQuery>
                 <ScalarProperty Name="datebegin" ColumnName="datebegin" />
                 <ScalarProperty Name="order" ColumnName="order" />
                 <ScalarProperty Name="hide" ColumnName="hide" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="userAccounts">
+            <EntityTypeMapping TypeName="ProjectCuoiKiModel.userAccount">
+              <MappingFragment StoreEntitySet="userAccount">
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="userName" ColumnName="userName" />
+                <ScalarProperty Name="passWord" ColumnName="passWord" />
+                <ScalarProperty Name="repassWord" ColumnName="repassWord" />
+                <ScalarProperty Name="rememberMe" ColumnName="rememberMe" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="userRoles">
+            <EntityTypeMapping TypeName="ProjectCuoiKiModel.userRole">
+              <MappingFragment StoreEntitySet="userRole">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="role" ColumnName="role" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -673,52 +793,8 @@ FROM [dbo].[banner] AS [banner]</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Invoices">
-            <EntityTypeMapping TypeName="ProjectCuoiKiModel.Invoice">
-              <MappingFragment StoreEntitySet="Invoice">
-                <ScalarProperty Name="status" ColumnName="status" />
-                <ScalarProperty Name="delivered" ColumnName="delivered" />
-                <ScalarProperty Name="Total" ColumnName="Total" />
-                <ScalarProperty Name="Shippingfee" ColumnName="Shippingfee" />
-                <ScalarProperty Name="DateDelivery" ColumnName="DateDelivery" />
-                <ScalarProperty Name="DateOrder" ColumnName="DateOrder" />
-                <ScalarProperty Name="AddressCustomer" ColumnName="AddressCustomer" />
-                <ScalarProperty Name="PhoneCustomer" ColumnName="PhoneCustomer" />
-                <ScalarProperty Name="EmailCustomer" ColumnName="EmailCustomer" />
-                <ScalarProperty Name="NameCustomer" ColumnName="NameCustomer" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="InvoiceDetails">
-            <EntityTypeMapping TypeName="ProjectCuoiKiModel.InvoiceDetail">
-              <MappingFragment StoreEntitySet="InvoiceDetail">
-                <ScalarProperty Name="total" ColumnName="total" />
-                <ScalarProperty Name="quantity" ColumnName="quantity" />
-                <ScalarProperty Name="price" ColumnName="price" />
-                <ScalarProperty Name="idProduct" ColumnName="idProduct" />
-                <ScalarProperty Name="idInvoice" ColumnName="idInvoice" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="products">
-            <EntityTypeMapping TypeName="ProjectCuoiKiModel.product">
-              <MappingFragment StoreEntitySet="product">
-                <ScalarProperty Name="imgname" ColumnName="imgname" />
-                <ScalarProperty Name="quantity" ColumnName="quantity" />
-                <ScalarProperty Name="idType" ColumnName="idType" />
-                <ScalarProperty Name="price" ColumnName="price" />
-                <ScalarProperty Name="order" ColumnName="order" />
-                <ScalarProperty Name="datebegin" ColumnName="datebegin" />
-                <ScalarProperty Name="hide" ColumnName="hide" />
-                <ScalarProperty Name="meta" ColumnName="meta" />
-                <ScalarProperty Name="link" ColumnName="link" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="Sp_Account_Login" FunctionName="ProjectCuoiKiModel.Store.Sp_Account_Login" />
+          <FunctionImportMapping FunctionImportName="userValid" FunctionName="ProjectCuoiKiModel.Store.Sp_Account_Login" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -735,7 +811,7 @@ FROM [dbo].[banner] AS [banner]</DefiningQuery>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="true" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
-        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>

@@ -13,7 +13,7 @@ using System.Data.Entity.Migrations;
 
 namespace ProjectCuoiki.Areas.admin.Controllers
 {
-    
+    [Authorize(Roles = "Admin")]
     public class ProductTableController : Controller
     {
         ProjectCuoiKiEntities db = new ProjectCuoiKiEntities();

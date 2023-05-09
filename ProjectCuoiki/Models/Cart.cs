@@ -26,5 +26,7 @@ namespace ProjectCuoiki.Models
             this.price = (decimal)p.price;
             this.quantity = 1;
         }
+
+        
     }
 }

@@ -1,0 +1,65 @@
+﻿@model IEnumerable<ProjectCuoiki.Models.Invoice>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Default/Mylayout.cshtml";
+}
+
+<!-- Begin Page Content -->
+<div style="margin-top:100px" class="container-fluid">
+
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4 ">
+        <div class="card-header py-3 d-flex justify-content-between">
+            <h2 class="m-0 font-weight-bold text-primary">Lich su mua hang</h2>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive" id="getProduct">
+                <table class="table table-bordered text-center " id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Mã hóa đơn</th>
+                            <th>Tên khách hàng</th>
+                            <th>SĐT khách hàng</th>
+                            <th>Email khách hàng</th>
+                            <th>Địa chỉ khách hàng</th>
+                            <th>Tổng tiền</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Mã hóa đơn</th>
+                            <th>Tên khách hàng</th>
+                            <th>SĐT khách hàng</th>
+                            <th>Email khách hàng</th>
+                            <th>Địa chỉ khách hàng</th>
+                            <th>Tổng tiền</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+
+
+
+
+
+                        @foreach (var i in Model)
+                        {
+                            <tr>
+                                <td><a href="@Url.Action("DetailOrder", "OrderHistory", new { invoiceId =  i.id})">@i.id</a></td>
+                                <td>@i.NameCustomer</td>
+                                <td>@i.PhoneCustomer</td>
+                                <td>@i.EmailCustomer</td>
+                                <td>@i.AddressCustomer</td>
+                                <td>@i.Total.GetValueOrDefault().ToString("#,###", System.Globalization.CultureInfo.GetCultureInfo("vi-VN"))</td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+

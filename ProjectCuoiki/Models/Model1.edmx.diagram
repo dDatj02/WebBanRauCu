@@ -4,24 +4,26 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="f4968347e7c24cfbac3287ae10ae126b" Name="Diagram1">
-        <EntityTypeShape EntityType="ProjectCuoiKiModel.footer" Width="1.5" PointX="5.25" PointY="9.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectCuoiKiModel.imageProduct" Width="1.5" PointX="5.625" PointY="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectCuoiKiModel.menu" Width="1.5" PointX="10" PointY="4.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectCuoiKiModel.news" Width="1.5" PointX="7.625" PointY="9" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectCuoiKiModel.positionbanner" Width="1.5" PointX="0.875" PointY="10.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectCuoiKiModel.slideshow" Width="1.5" PointX="9.875" PointY="8" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectCuoiKiModel.sysdiagram" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectCuoiKiModel.typeproduct" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectCuoiKiModel.banner" Width="1.5" PointX="2.625" PointY="10.25" IsExpanded="true" />
+      <Diagram DiagramId="7f71c5711209437aa21fcc3fa199a809" Name="Diagram1" ZoomLevel="64">
+        <EntityTypeShape EntityType="ProjectCuoiKiModel.footer" Width="1.5" PointX="0.75" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectCuoiKiModel.imageProduct" Width="1.5" PointX="5.25" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectCuoiKiModel.Invoice" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectCuoiKiModel.InvoiceDetail" Width="1.5" PointX="8.25" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectCuoiKiModel.menu" Width="1.5" PointX="2.75" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectCuoiKiModel.news" Width="1.5" PointX="10.75" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectCuoiKiModel.positionbanner" Width="1.5" PointX="5.75" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectCuoiKiModel.product" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectCuoiKiModel.slideshow" Width="1.5" PointX="4.75" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectCuoiKiModel.typeproduct" Width="1.5" PointX="0.75" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectCuoiKiModel.userAccount" Width="1.5" PointX="10.75" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectCuoiKiModel.userRole" Width="1.5" PointX="13" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectCuoiKiModel.banner" Width="1.5" PointX="8" PointY="9.25" IsExpanded="true" />
+        <AssociationConnector Association="ProjectCuoiKiModel.FK_imageProduct_product" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectCuoiKiModel.FK_InvoiceDetail_Invoice" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectCuoiKiModel.FK_InvoiceDetail_product" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectCuoiKiModel.FK_banner_positionbanner" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="ProjectCuoiKiModel.Invoice" Width="1.5" PointX="4.625" PointY="5.875" />
-        <EntityTypeShape EntityType="ProjectCuoiKiModel.InvoiceDetail" Width="1.5" PointX="0.625" PointY="6" IsExpanded="true" />
-        <AssociationConnector Association="ProjectCuoiKiModel.FK_InvoiceDetail_Invoice" />
-        <EntityTypeShape EntityType="ProjectCuoiKiModel.product" Width="1.5" PointX="3" PointY="0.875" />
-        <AssociationConnector Association="ProjectCuoiKiModel.FK_imageProduct_product" />
-        <AssociationConnector Association="ProjectCuoiKiModel.FK_InvoiceDetail_product" />
-        <AssociationConnector Association="ProjectCuoiKiModel.FK_product_typeproduct" />
+        <AssociationConnector Association="ProjectCuoiKiModel.FK_product_typeproduct" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectCuoiKiModel.FK_userRole_userAccount" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

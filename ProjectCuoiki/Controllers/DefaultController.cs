@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace ProjectCuoiki.Controllers
 {
+    [Authorize(Roles = "User")]
     public class DefaultController : Controller
     {
         // GET: Default
@@ -23,7 +24,7 @@ namespace ProjectCuoiki.Controllers
         }
         public ActionResult getSlideshow()
         {
-            var listslide= from item in db.slideshows where item.hide==false orderby item.order ascending select  item;
+            var listslide= from item in db.slideshows where item.hide==false orderby item.order ascending select item;
             return PartialView(listslide.ToList());
         }
         public ActionResult getFooter()
@@ -32,7 +33,7 @@ namespace ProjectCuoiki.Controllers
             var item=db.footers.FirstOrDefault(i => i.hide == false);
             return PartialView(item);
         }
-        public ActionResult getbanneTtop()
+        public ActionResult getbannerTop()
         {
             var banneritem= db.banners.FirstOrDefault(i => i.hide == false& i.positionId==1);
             return PartialView(banneritem);  
